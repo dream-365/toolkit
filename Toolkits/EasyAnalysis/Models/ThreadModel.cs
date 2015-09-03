@@ -7,14 +7,29 @@ namespace EasyAnalysis.Models
 {
     public class ThreadModel
     {
-        public String Id { get; set; }
+        public string Id { get; set; }
 
-        public String Title { get; set; }
+        public string Title { get; set; }
 
         public DateTime CreateOn { get; set; }
 
-        public String ForumId { get; set; }
+        public int? TypeId { get; set; }
+        
+        public string ForumId { get; set; }
 
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
+    }
+
+    public class ThreadViewModel
+    {
+        public string Id { get; set; }
+
+        public string Title { get; set; }
+
+        public string Category { get; set; }
+
+        public string Type { get; set; }
+
+        public IEnumerable<string> Tags { get; set; }
     }
 }

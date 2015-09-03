@@ -21,16 +21,39 @@ namespace EasyAnalysis.Controllers
             _threadRepository = new ThreadInMemoryRepository();
         }
 
-        // GET api/values
+        // GET api/thread
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            throw new NotImplementedException();
         }
 
         // GET api/values/5
         public ThreadModel Get(string id)
         {
             return _threadRepository.Get(id);
+        }
+
+        [Route("api/thread/{id}/detail"), HttpGet]
+        public ThreadViewModel GetDetail(string id)
+        {
+            var basic = _threadRepository.Get(id);
+
+            var tags = _threadRepository.GetTagsByThread(id);
+
+            var vm = new ThreadViewModel
+            {
+                Id = basic.Id,
+                Title = basic.Title,
+                Tags = tags
+            };
+
+            return vm;
+        }
+
+        [Route("api/thread/{id}/classify/{typeId}"), HttpPost]
+        public void Classify(string id, int typeId)
+        {
+            throw new NotImplementedException();
         }
 
         // POST api/values
@@ -59,20 +82,10 @@ namespace EasyAnalysis.Controllers
             return success ? identifier : string.Empty;
         }
 
-        [Route("api/thread/{id}/tags"), HttpGet]
-        public IEnumerable<String> GetTagsByThread(string id)
-        {
-            return new List<String>
-            {
-                "Hello",
-                "World"
-            };
-        }
-
         [Route("api/thread/{id}/tag/{tag}"), HttpPost]
         public string AddTagToThread(string id, string tag)
         {
-            return "TAG_NAME";
+            throw new NotImplementedException();
         }
 
         private async Task<bool> RegisterNewThreadAsync(string identifier)

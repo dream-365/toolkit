@@ -5,11 +5,25 @@
             <div>
                 <div>{{item.Title}}</div>
             </div>
-            <div style="font-size:140%;margin:0 20px 20px 0;">
+            <div style="font-size:140%;margin:10px 0 10px 0px;">
                 <span class="label label-primary" ng-repeat="tag in item.Tags" style="margin-right:5px;">{{tag}}</span>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Add tag and then enter" ng-model="TagText" ng-keypress="TagText_keypress($event)">
+                <input style="width:400px;" type="text" class="form-control" placeholder="Add tag and then enter" ng-model="TagText" ng-keypress="TagText_keypress($event)">
+            </div>
+            <div class="form-group">
+                <select class="form-control" style="width:400px;">
+                    <option value="0">-- SELECT --</option>
+                    <optgroup label="Windows Runtime">
+                        <option value="1">Background Task</option>
+                        <option value="2">Network</option>
+                    </optgroup>
+                    <optgroup label="XAML">
+                        <option value="3">Layout</option>
+                        <option value="4">Control</option>
+                        <option value="5">Style</option>
+                    </optgroup>
+                </select>
             </div>
         </div>
     </div>

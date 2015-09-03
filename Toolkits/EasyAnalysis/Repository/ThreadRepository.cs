@@ -22,5 +22,10 @@ namespace EasyAnalysis.Repository
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<string> GetTagsByThread(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
