@@ -1,0 +1,6 @@
+﻿<div>
+    <div class="form-group" ng-show="state=='init'">
+        <input type="text" class="form-control" placeholder="Put URI here and then enter" ng-model="URIText" ng-keypress="URIText_keypress($event)">
+    </div>
+    <div ng-show="state=='search'">Querying..., please wait for a moment :)</div>
+</div>

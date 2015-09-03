@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="_App_">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Analysis</title>
+    <link href="http://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/site.css" rel="stylesheet">
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Easy Analysis</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" style="margin-top:20px;">
+            <div ng-view></div>
+        </div>
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/respond/1.4.2/respond.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.min.js"></script>
+
+    <script>
+        var app = angular.module('_App_', ['ngRoute', 'appControllers']);
+
+        app.config(['$routeProvider',
+          function ($routeProvider) {
+              $routeProvider.
+                when('/', {
+                    templateUrl: 'partials/discover.html',
+                    controller: 'DiscoverController'
+                }).when('/detail/:identifier', {
+                    templateUrl: 'partials/detail.html',
+                    controller: 'DetailController'
+                });
+        }]);
+
+        var appControllers = angular.module('appControllers', []);
+
+        appControllers.controller('DiscoverController', ['$scope', '$http', '$location',
+            function ($scope, $http, $location) {
+
+            $scope.state = 'init';
+
+            $scope.URIText_keypress = function (e) {
+                if(e.which === 13)
+                {
+                    $scope.state = 'search';
+
+                    var req = {
+                        method: 'POST',
+                        url: '/api/thread',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: '=' + $scope.URIText
+                    }
+                    
+                    $http(req).success(function (identifier) {
+                        $location.url('/detail/' + identifier);
+                    });
+                }
+            }
+        }]);
+
+
+        appControllers.controller('DetailController', ['$scope', '$http', '$location', '$routeParams',
+            function ($scope, $http, $location, $routeParams) {
+                $scope.identifier = $routeParams.identifier;
+
+                $scope.state = 'load';
+
+                $http.get('api/thread/' + $scope.identifier).success(function (data) {
+                    $scope.item = data;
+                    $scope.state = 'done';
+                });
+
+                $scope.TagText_keypress = function (e) {
+                    if (e.which === 13) {
+                        var tags = $scope.item.Tags = $scope.item.Tags || [];
+
+                        tags.push($scope.TagText);
+
+                        $scope.TagText = '';
+                    }
+                }
+            }]);
+
+    </script>
+</body>
+</html>

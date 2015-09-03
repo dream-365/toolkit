@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="ThreadShareApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share 365 App</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet">
+    <link href="/Content/site.css" rel="stylesheet">
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body style="padding-top:5px;">
+    <div class="container">
+        <div class="row">
+            <div ng-view></div>
+        </div>
+    </div>
+
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/respond.js"></script>
+    <script src="/Scripts/angular.js"></script>
+    <script src="/Scripts/angular-route.js"></script>
+
+    <script>
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        var app = angular.module('ThreadShareApp', ['ngRoute', 'appControllers']),
+            url = getParameterByName("url");
+
+        app.config(['$routeProvider',
+            function ($routeProvider) {
+                $routeProvider.
+                when('/', {
+                    templateUrl: 'partials/loading.html',
+                    controller: 'LodingController'
+                }).when('/detail/:identifier', {
+                    templateUrl: 'partials/detail.html',
+                    controller: 'DetailController'
+                });
+            }]);
+
+        var appControllers = angular.module('appControllers', []);
+
+        appControllers.controller('LodingController', ['$scope', '$http', '$location',
+            function ($scope, $http, $location) {
+                queryIdentifier($http, url, function (identifier) {
+                    $location.url('/detail/' + identifier);
+                });
+            }]);
+
+
+        appControllers.controller('DetailController', ['$scope', '$http', '$location', '$routeParams',
+            function ($scope, $http, $location, $routeParams) {
+                $scope.identifier = $routeParams.identifier;
+
+                $scope.state = 'load';
+
+                $http.post('/Item/Detail', { identifier: $scope.identifier }).success(function (data) {
+                    $scope.item = data.result;
+
+                    $scope.state = 'done';
+                });
+
+                $scope.TagText_keypress = function (e) {
+                    if (e.which === 13) {
+                        var tags = $scope.item.Tags = $scope.item.Tags || [];
+
+                        tags.push($scope.TagText);
+
+                        $scope.TagText = '';
+                    }
+                }
+            }]);
+
+        function queryIdentifier($http, text, done)
+        {
+            $http.post('/Item/QueryIdentifier', { text: text }).success(function (data) {
+                done.call(this, data.result);
+            });
+        }
+    </script>
+</body>
+</html>
