@@ -59,6 +59,22 @@ namespace EasyAnalysis.Controllers
             return success ? identifier : string.Empty;
         }
 
+        [Route("api/thread/{id}/tags"), HttpGet]
+        public IEnumerable<String> GetTagsByThread(string id)
+        {
+            return new List<String>
+            {
+                "Hello",
+                "World"
+            };
+        }
+
+        [Route("api/thread/{id}/tag/{tag}"), HttpPost]
+        public string AddTagToThread(string id, string tag)
+        {
+            return "TAG_NAME";
+        }
+
         private async Task<bool> RegisterNewThreadAsync(string identifier)
         {
             // register a new thread item
@@ -67,6 +83,11 @@ namespace EasyAnalysis.Controllers
                 var parser = new ThreadParser(Guid.Parse(identifier));
 
                 var info = await parser.ReadThreadInfoAsync();
+
+                if(info == null)
+                {
+                    return false;
+                }
 
                 // query the database by the identifer / create a new item if not exist
                 var model = new ThreadModel

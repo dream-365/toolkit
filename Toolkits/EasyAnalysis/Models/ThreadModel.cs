@@ -17,6 +17,4 @@ namespace EasyAnalysis.Models
 
         public String AuthorId { get; set; }
     }
-
-
 }

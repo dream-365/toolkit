@@ -10,7 +10,7 @@ namespace Utility.MSDN.UnitTest
         [TestMethod]
         public async Task ReadThreadInfoTest()
         {
-            var parser = new ThreadParser(Guid.Parse("d0da6e88-6f7c-4450-9749-26efb44b098f"));
+            var parser = new ThreadParser(Guid.Parse("18273ef6-92f8-4f11-818d-7e3b8470307a"));
 
             var info = await parser.ReadThreadInfoAsync();
 
