@@ -3,8 +3,9 @@
         <div ng-show="state=='load'">Loading...</div>
         <div ng-show="state=='done'">
             <div>
-                <div>{{item.Title}}</div>
+                <h4>{{item.Title}}</h4>           
             </div>
+            
             <div style="font-size:140%;margin:10px 0 10px 0px;">
                 <span class="label label-primary" ng-repeat="tag in item.Tags" style="margin-right:5px;">{{tag}}</span>
             </div>
@@ -29,6 +30,9 @@
     </div>
 
     <div>
-        <a href="#/">Go Back</a>
+        <button type="button" class="btn btn-material-deep-purple" aria-label="BACK" ng-click="back()">            
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            BACK
+        </button>
     </div>
 </div>

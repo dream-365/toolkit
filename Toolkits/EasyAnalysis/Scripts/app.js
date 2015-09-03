@@ -38,6 +38,11 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
                 $scope.TagText = '';
             }
         }
+
+        $scope.back = function () {
+            $location.url('/');
+        }
+
     }]);
 
 var app = angular.module('_app_', ['ngRoute', 'controllers']);
