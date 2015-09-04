@@ -8,19 +8,27 @@ namespace EasyAnalysis.Repository
 {
     public class ThreadRepository : IThreadRepository
     {
+        private readonly DefaultDbConext _context = new DefaultDbConext();
+
         public string Create(ThreadModel model)
         {
-            throw new NotImplementedException();
+            var item = _context.Threads.Add(model);
+
+            _context.SaveChanges();
+
+            return item.Id;
         }
 
         public bool Exists(string id)
         {
-            throw new NotImplementedException();
+            var result = _context.Threads.FirstOrDefault(m => m.Id.Equals(id));
+
+            return result != null;
         }
 
         public ThreadModel Get(string id)
         {
-            throw new NotImplementedException();
+            return _context.Threads.FirstOrDefault(m => m.Id.Equals(id));
         }
 
         public IEnumerable<string> GetTagsByThread(string id)

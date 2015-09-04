@@ -18,7 +18,7 @@ namespace EasyAnalysis.Controllers
 
         public ThreadController()
         {
-            _threadRepository = new ThreadInMemoryRepository();
+            _threadRepository = new ThreadRepository();
         }
 
         // GET api/thread

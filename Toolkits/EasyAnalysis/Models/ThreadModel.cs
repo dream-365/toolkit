@@ -18,6 +18,8 @@ namespace EasyAnalysis.Models
         public string ForumId { get; set; }
 
         public string AuthorId { get; set; }
+
+        public ICollection<Tag> Tags { get; set; }
     }
 
     public class ThreadViewModel
