@@ -187,7 +187,9 @@
     <Compile Include="Models\EFTypeConfigrations.cs" />
     <Compile Include="Models\ThreadModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ITagRepository.cs" />
     <Compile Include="Repository\IThreadRepository.cs" />
+    <Compile Include="Repository\TagRepository.cs" />
     <Compile Include="Repository\ThreadInMemoryRepository.cs" />
     <Compile Include="Repository\ThreadRepository.cs" />
     <Compile Include="Startup.cs" />

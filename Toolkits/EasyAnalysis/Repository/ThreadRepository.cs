@@ -8,7 +8,12 @@ namespace EasyAnalysis.Repository
 {
     public class ThreadRepository : IThreadRepository
     {
-        private readonly DefaultDbConext _context = new DefaultDbConext();
+        private readonly DefaultDbConext _context;
+
+        public ThreadRepository(DefaultDbConext context)
+        {
+            _context = context;
+        }
 
         public void Change(string id, Action<ThreadModel> applyModelChange)
         {

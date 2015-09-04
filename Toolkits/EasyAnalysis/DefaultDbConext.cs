@@ -15,6 +15,8 @@ namespace EasyAnalysis
 
         public DbSet<ThreadModel> Threads { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder

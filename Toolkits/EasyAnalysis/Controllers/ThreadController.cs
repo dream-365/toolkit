@@ -15,10 +15,13 @@ namespace EasyAnalysis.Controllers
     public class ThreadController : ApiController
     {
         private readonly IThreadRepository _threadRepository;
+        private readonly ITagRepository _tagRepository;
 
         public ThreadController()
         {
-            _threadRepository = new ThreadRepository();
+            var context = new DefaultDbConext();
+            _threadRepository = new ThreadRepository(context);
+            _tagRepository = new TagRepository(context);
         }
 
         // GET api/thread
@@ -118,6 +121,15 @@ namespace EasyAnalysis.Controllers
                     CreateOn = info.CreateOn,
                     ForumId = info.ForumId
                 };
+
+                var tags = Utils.DetectTagsFromTitle(info.Title);
+
+                foreach (var name in tags)
+                {
+                    var tag = _tagRepository.CreateTagIfNotExists(name);
+
+                    model.Tags.Add(tag);
+                }
 
                 _threadRepository.Create(model);
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EasyAnalysis.Models;
+using EasyAnalysis.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,6 +11,8 @@ namespace EasyAnalysis.Controllers
 {
     public class TagController : ApiController
     {
+        private readonly ITagRepository _tagRepositry = new TagRepository(new DefaultDbConext());
+
         // GET: api/Tag
         public IEnumerable<string> Get()
         {
@@ -22,9 +26,14 @@ namespace EasyAnalysis.Controllers
         }
 
         // POST: api/Tag
-        public int Post([FromBody]string value)
+        public Tag Post([FromBody]string value)
         {
-            throw new NotImplementedException();
+            if(string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            return _tagRepositry.CreateTagIfNotExists(value);
         }
 
         // PUT: api/Tag/5
