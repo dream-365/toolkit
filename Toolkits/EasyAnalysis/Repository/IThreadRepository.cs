@@ -13,5 +13,6 @@ namespace EasyAnalysis.Repository
         string Create(ThreadModel model);
         ThreadModel Get(string id);
         IEnumerable<string> GetTagsByThread(string id);
+        void Change(string id, Action<ThreadModel> model);
     }
 }

@@ -10,6 +10,15 @@ namespace EasyAnalysis.Repository
     {
         private readonly DefaultDbConext _context = new DefaultDbConext();
 
+        public void Change(string id, Action<ThreadModel> applyModelChange)
+        {
+            var modelToChange = FindByIdIncludeTags(id);
+
+            applyModelChange(modelToChange);
+
+            _context.SaveChanges();
+        }
+
         public string Create(ThreadModel model)
         {
             var item = _context.Threads.Add(model);
@@ -21,14 +30,21 @@ namespace EasyAnalysis.Repository
 
         public bool Exists(string id)
         {
-            var result = _context.Threads.FirstOrDefault(m => m.Id.Equals(id));
+            var result = _context.Threads.Find(id);
 
             return result != null;
         }
 
         public ThreadModel Get(string id)
         {
-            return _context.Threads.FirstOrDefault(m => m.Id.Equals(id));
+            return FindByIdIncludeTags(id);
+        }
+
+        private ThreadModel FindByIdIncludeTags(string id)
+        {
+            return _context.Threads
+                .Include("Tags")
+                .FirstOrDefault(m => m.Id.Equals(id));
         }
 
         public IEnumerable<string> GetTagsByThread(string id)

@@ -17,7 +17,10 @@ namespace EasyAnalysis
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new ThreadTypeConfigration());
+            modelBuilder
+                .Configurations
+                .Add(new TagTypeConfigration())
+                .Add(new ThreadTypeConfigration());
 
             base.OnModelCreating(modelBuilder);
         }

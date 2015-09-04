@@ -7,6 +7,11 @@ namespace EasyAnalysis.Models
 {
     public class ThreadModel
     {
+        public ThreadModel()
+        {
+            Tags = new List<Tag>();
+        }
+
         public string Id { get; set; }
 
         public string Title { get; set; }

@@ -38,13 +38,13 @@ namespace EasyAnalysis.Controllers
         {
             var basic = _threadRepository.Get(id);
 
-            var tags = _threadRepository.GetTagsByThread(id);
-
             var vm = new ThreadViewModel
             {
                 Id = basic.Id,
                 Title = basic.Title,
-                Tags = tags
+                Tags = basic.Tags
+                            .Select(m => m.Name)
+                            .AsEnumerable()
             };
 
             return vm;
@@ -53,7 +53,14 @@ namespace EasyAnalysis.Controllers
         [Route("api/thread/{id}/classify/{typeId}"), HttpPost]
         public void Classify(string id, int typeId)
         {
-            throw new NotImplementedException();
+            _threadRepository.Change(id, (model) => {
+                if(model != null && !model.Tags
+                         .Select(m => m.Id)
+                         .Contains(typeId))
+                {
+                    model.Tags.Add(new Tag { Id = typeId });
+                }
+            });
         }
 
         // POST api/values

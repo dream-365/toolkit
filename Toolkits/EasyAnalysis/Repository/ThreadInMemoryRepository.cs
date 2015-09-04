@@ -6,6 +6,10 @@ using EasyAnalysis.Models;
 
 namespace EasyAnalysis.Repository
 {
+    /// <summary>
+    /// Fake thread repository:
+    /// This class is for UI design purpose only
+    /// </summary>
     public class ThreadInMemoryRepository : IThreadRepository
     {
         struct ThreadTag
@@ -54,6 +58,11 @@ namespace EasyAnalysis.Repository
             return TagStore.Where(m => m.Id.Equals(id))
                            .Select(m => m.Tag)
                            .Distinct();
+        }
+
+        public void Change(string id, Action<ThreadModel> model)
+        {
+            throw new NotImplementedException();
         }
     }
 }
