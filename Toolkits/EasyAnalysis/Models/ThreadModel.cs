@@ -35,7 +35,7 @@ namespace EasyAnalysis.Models
 
         public string Category { get; set; }
 
-        public string Type { get; set; }
+        public int TypeId { get; set; }
 
         public IEnumerable<string> Tags { get; set; }
     }

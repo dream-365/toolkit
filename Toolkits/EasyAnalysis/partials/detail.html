@@ -16,6 +16,7 @@
                 <select class="form-control" 
                         style="width:200px;float:left;"
                         ng-model="model.categorySelect"
+                        convert-to-number
                         >
                     <option value="-1"> -- category --</option>
                     <option ng-repeat="option in data.categories" value="{{option.index}}">{{option.name}}</option>
@@ -24,6 +25,7 @@
                         style="width:200px;"
                         ng-model="model.typeSelect"
                         ng-change="typeSelectChange()"
+                        convert-to-number
                         >
                     <option value="-1"> -- type --</option>
                     <option ng-repeat="option in data.typeGroups[model.categorySelect]" value="{{option.id}}">{{option.name}}</option>

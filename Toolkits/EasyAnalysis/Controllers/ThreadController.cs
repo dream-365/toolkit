@@ -45,6 +45,7 @@ namespace EasyAnalysis.Controllers
             {
                 Id = basic.Id,
                 Title = basic.Title,
+                TypeId = basic.TypeId.GetValueOrDefault(),
                 Tags = basic.Tags
                             .Select(m => m.Name)
                             .AsEnumerable()
@@ -57,11 +58,9 @@ namespace EasyAnalysis.Controllers
         public void Classify(string id, int typeId)
         {
             _threadRepository.Change(id, (model) => {
-                if(model != null && !model.Tags
-                         .Select(m => m.Id)
-                         .Contains(typeId))
+                if (model != null)
                 {
-                    model.Tags.Add(new Tag { Id = typeId });
+                    model.TypeId = typeId;
                 }
             });
         }
@@ -69,7 +68,7 @@ namespace EasyAnalysis.Controllers
         // POST api/values
         public async Task<string> Post([FromBody]string value)
         {
-            String identifier = String.Empty;
+            string identifier = string.Empty;
 
             Regex urlRegex = new Regex(@"(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})");
 
@@ -95,7 +94,18 @@ namespace EasyAnalysis.Controllers
         [Route("api/thread/{id}/tag/{tag}"), HttpPost]
         public string AddTagToThread(string id, string tag)
         {
-            throw new NotImplementedException();
+            _threadRepository.Change(id, (model) => {
+                if (model != null && !model.Tags
+                         .Select(m => m.Name.ToLower())
+                         .Contains(tag.ToLower()))
+                {
+                    var newTag = _tagRepository.CreateTagIfNotExists(tag);
+
+                    model.Tags.Add(newTag);
+                }
+            });
+
+            return tag;
         }
 
         private async Task<bool> RegisterNewThreadAsync(string identifier)
