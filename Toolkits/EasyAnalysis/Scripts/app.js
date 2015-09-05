@@ -23,6 +23,24 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
 
         $scope.state = 'load';
 
+        $scope.model = {
+            categorySelect: '-1',
+            typeSelect: '-1'
+        };
+
+        var data = {
+            categories: [
+              { index: 0, name: 'Windows Runtime' },
+              { index: 1, name: 'XAML UI' }
+            ],
+            typeGroups: [
+                [{ id: 1, name: 'Background Task' }, { id: 2, name: 'Network' }],
+                [{ id: 3, name: 'Controls' }, { id: 4, name: 'Styles' }]
+            ]
+        };
+
+        $scope.data = data;
+
         threadService.detail($scope.identifier)
                      .success(function (data) {
                          $scope.item = data;
@@ -37,6 +55,10 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
 
                 $scope.TagText = '';
             }
+        }
+
+        $scope.typeSelectChange = function () {
+            console.log("type: " + $scope.model.typeSelect);
         }
 
         $scope.back = function () {

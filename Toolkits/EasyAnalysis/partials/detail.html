@@ -13,17 +13,20 @@
                 <input style="width:400px;" type="text" class="form-control" placeholder="Add tag and then enter" ng-model="TagText" ng-keypress="TagText_keypress($event)">
             </div>
             <div class="form-group">
-                <select class="form-control" style="width:400px;">
-                    <option value="0">-- SELECT --</option>
-                    <optgroup label="Windows Runtime">
-                        <option value="1">Background Task</option>
-                        <option value="2">Network</option>
-                    </optgroup>
-                    <optgroup label="XAML">
-                        <option value="3">Layout</option>
-                        <option value="4">Control</option>
-                        <option value="5">Style</option>
-                    </optgroup>
+                <select class="form-control" 
+                        style="width:200px;float:left;"
+                        ng-model="model.categorySelect"
+                        >
+                    <option value="-1"> -- category --</option>
+                    <option ng-repeat="option in data.categories" value="{{option.index}}">{{option.name}}</option>
+                </select>
+                <select class="form-control" 
+                        style="width:200px;"
+                        ng-model="model.typeSelect"
+                        ng-change="typeSelectChange()"
+                        >
+                    <option value="-1"> -- type --</option>
+                    <option ng-repeat="option in data.typeGroups[model.categorySelect]" value="{{option.id}}">{{option.name}}</option>
                 </select>
             </div>
         </div>
