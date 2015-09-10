@@ -144,7 +144,6 @@ app.factory('threadService', ['$http', function ($http) {
             return $http.get('api/thread/' + id + '/detail');
         },
         addTag: function (id, tag) {
-            encodeURIComponent
             return $http.post('api/thread/' + id + '/tag/' + encodeURIComponent(tag));
         },
         getTags: function (id) {
