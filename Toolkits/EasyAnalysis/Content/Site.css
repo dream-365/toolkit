@@ -15,3 +15,9 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+
+
+#tags_dropdown {
+    overflow-y:auto;
+    max-height: 150px;
+}

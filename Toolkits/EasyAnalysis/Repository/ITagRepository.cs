@@ -10,5 +10,7 @@ namespace EasyAnalysis.Repository
     interface ITagRepository
     {
         Tag CreateTagIfNotExists(string name);
+
+        IQueryable<Tag> Search(string q);
     }
 }

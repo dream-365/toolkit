@@ -31,5 +31,10 @@ namespace EasyAnalysis.Repository
 
             return findByName;
         }
+
+        public IQueryable<Tag> Search(string q)
+        {
+            return _context.Tags.Where(m => m.Name.Contains(q));
+        }
     }
 }

@@ -3,35 +3,54 @@
         <div ng-show="state=='load'">Loading...</div>
         <div ng-show="state=='done'">
             <div>
-                <h4>{{item.Title}}</h4>           
+                <h4>
+                    <a ng-href="https://social.msdn.microsoft.com/Forums/windowsapps/en-US/{{identifier}}" 
+                       target="_blank">{{item.Title}}</a>
+                </h4>    
             </div>
             
-            <div style="font-size:140%;margin:10px 0 10px 0px;">
-                <span class="label label-primary" ng-repeat="tag in item.Tags" style="margin-right:5px;">{{tag}}</span>
-            </div>
-            <div class="form-group">
-                <input style="width:400px;" type="text" class="form-control" placeholder="Add tag and then enter" ng-model="TagText" ng-keypress="TagText_keypress($event)">
-            </div>
-            <div class="form-group">
-                <select class="form-control" 
-                        style="width:200px;float:left;"
-                        ng-model="model.categorySelect"
-                        convert-to-number
-                        >
-                    <option value="-1"> -- category --</option>
-                    <option ng-repeat="option in data.categories" value="{{option.index}}">{{option.name}}</option>
-                </select>
-                <select class="form-control" 
-                        style="width:200px;"
-                        ng-model="model.typeSelect"
-                        ng-change="typeSelectChange()"
-                        convert-to-number
-                        >
-                    <option value="-1"> -- type --</option>
-                    <option ng-repeat="option in data.typeGroups[model.categorySelect]" value="{{option.id}}">{{option.name}}</option>
-                </select>
-            </div>
-        </div>
+            <div style="margin:10px 0 10px 0px;">
+                <div style="font-size:140%;float:left;">
+                    <span ng-repeat="tag in item.Tags" class="label label-primary" ng-click="Tag_click()"  style="margin-right:5px;cursor:pointer;">{{tag}}</span>
+                </div>             
+                <!--<input id="tags" 
+                       style="width:200px;" 
+                       type="text" 
+                       class="form-control" 
+                       placeholder="Add tag and then enter" 
+                       ng-model="TagText" 
+                       ng-keypress="TagText_keypress($event)">-->
+                    <div angucomplete-alt 
+                         id="tags"
+                         style="width:200px;display:inline-block;"
+                         placeholder="Add tag" 
+                         pause="500" 
+                         selected-object="selectedTag" 
+                         title-field="Name" 
+                         remote-url="api/tag/search" 
+                         remote-url-request-formatter="remoteUrlRequestFn" 
+                         remote-url-data-field="Items" 
+                         minlength="1" 
+                         input-class="form-control form-control-small" 
+                         match-class="highlight" clear-selected="true"></div>
+                    <div class="form-group">
+                        <select class="form-control"
+                                style="width:200px;float:left;"
+                                ng-model="model.categorySelect"
+                                convert-to-number>
+                            <option value="-1"> -- category --</option>
+                            <option ng-repeat="option in data.categories" value="{{option.index}}">{{option.name}}</option>
+                        </select>
+                        <select class="form-control"
+                                style="width:200px;"
+                                ng-model="model.typeSelect"
+                                ng-change="typeSelectChange()"
+                                convert-to-number>
+                            <option value="-1"> -- type --</option>
+                            <option ng-repeat="option in data.typeGroups[model.categorySelect]" value="{{option.id}}">{{option.name}}</option>
+                        </select>
+                    </div>
+                </div>
     </div>
 
     <div>

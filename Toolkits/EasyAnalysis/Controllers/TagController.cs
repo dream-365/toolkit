@@ -19,6 +19,20 @@ namespace EasyAnalysis.Controllers
             throw new NotImplementedException();
         }
 
+        [Route("api/tag/search"), HttpGet]
+        public TagSearchResult Search(string q)
+        {
+            var list = _tagRepositry.Search(q).Take(10).ToList();
+
+            var result = new TagSearchResult
+            {
+                Items = list
+            };
+
+            return result;
+        }
+
+
         // GET: api/Tag/5
         public string Get(int id)
         {

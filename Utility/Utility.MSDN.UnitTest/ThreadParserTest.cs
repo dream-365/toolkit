@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Utility.MSDN.UnitTest
 {
@@ -16,6 +17,16 @@ namespace Utility.MSDN.UnitTest
 
             // HAPPY_PASS
             Assert.IsNotNull(info);
+        }
+
+        [TestMethod]
+        public async Task ThreadCollectionTest()
+        {
+            var collection = new ThreadCollection("wpdevelop");
+
+            var threads = await collection.NavigateToPageAsync(1);
+
+            Assert.AreEqual(20, threads.Count());
         }
     }
 }

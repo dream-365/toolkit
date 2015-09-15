@@ -14,7 +14,7 @@
             { id: 1, name: 'Background Task' },
             { id: 2, name: 'Network' },
             { id: 3, name: 'Media' },
-            { id: 4, name: 'File Access'},
+            { id: 4, name: 'File Access' },
             { id: 5, name: 'Others'}
         ],
         // Visual Studio

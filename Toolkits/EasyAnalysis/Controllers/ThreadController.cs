@@ -91,21 +91,21 @@ namespace EasyAnalysis.Controllers
             return success ? identifier : string.Empty;
         }
 
-        [Route("api/thread/{id}/tag/{tag}"), HttpPost]
-        public string AddTagToThread(string id, string tag)
+        [Route("api/thread/{id}/tag"), HttpPost]
+        public string AddTagToThread(string id, [FromBody]string value)
         {
             _threadRepository.Change(id, (model) => {
                 if (model != null && !model.Tags
                          .Select(m => m.Name.ToLower())
-                         .Contains(tag.ToLower()))
+                         .Contains(value.ToLower()))
                 {
-                    var newTag = _tagRepository.CreateTagIfNotExists(tag);
+                    var newTag = _tagRepository.CreateTagIfNotExists(value);
 
                     model.Tags.Add(newTag);
                 }
             });
 
-            return tag;
+            return value;
         }
 
         private async Task<bool> RegisterNewThreadAsync(string identifier)

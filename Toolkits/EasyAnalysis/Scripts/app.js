@@ -30,6 +30,32 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
 
         $scope.data = _global_data;
 
+        $scope.remoteUrlRequestFn = function (str) {
+            return { q: str };
+        };
+
+        $scope.$watch('selectedTag', function (newValue, oldValue) {
+            if (newValue === undefined)
+            {
+                return;
+            }
+
+            var newTag = typeof newValue === 'string'
+                      ? newValue
+                      : newValue.originalObject.Name;
+
+            threadService
+                .addTag($scope.identifier, newTag)
+                .success(function (tag) {
+                    if (tag === '') {
+                        return;
+                    }
+
+                    var tags = $scope.item.Tags = $scope.item.Tags || [];
+
+                    tags.push(tag);
+                });
+        });
 
         // load data
         threadService.detail($scope.identifier)
@@ -53,27 +79,11 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
                          $scope.state = 'done';
                      });
 
-        $scope.TagText_keypress = function (e) {
-            if (e.which === 13) {
-                var newTag = $scope.TagText;
-                $scope.TagText = '';
-                threadService
-                    .addTag($scope.identifier, newTag)
-                    .success(function (tag) {
-                        if (tag === '') {
-                            return;
-                        }
-
-                        var tags = $scope.item.Tags = $scope.item.Tags || [];
-                        tags.push(tag);
-                        
-                    });
-            }
+        $scope.Tag_click = function () {
+            console.log("tag click");
         }
 
         $scope.typeSelectChange = function () {
-            console.log('threadId: ' + $scope.identifier + ", typeId: " + $scope.model.typeSelect);
-
             threadService.classify($scope.identifier, $scope.model.typeSelect);
         }
 
@@ -106,7 +116,7 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
         }
     }]);
 
-var app = angular.module('_app_', ['ngRoute', 'controllers']);
+var app = angular.module('_app_', ['ngRoute', 'controllers', 'angucomplete-alt']);
 
 app.config(['$routeProvider',
   function ($routeProvider) {
@@ -123,6 +133,7 @@ app.config(['$routeProvider',
 app.factory('threadService', ['$http', function ($http) {
     return {
         query: function (uri) {
+            // TODO: CODE_REFACTOR
             var req = {
                 method: 'POST',
                 url: '/api/thread',
@@ -144,12 +155,20 @@ app.factory('threadService', ['$http', function ($http) {
             return $http.get('api/thread/' + id + '/detail');
         },
         addTag: function (id, tag) {
-            return $http.post('api/thread/' + id + '/tag/' + encodeURIComponent(tag));
+            // TODO: CODE_REFACTOR
+            var req = {
+                method: 'POST',
+                url: 'api/thread/' + id + '/tag/',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: '=' + encodeURIComponent(tag)
+            }
+
+            return $http(req);
         },
         getTags: function (id) {
             return $http.get('api/thread/' + id + '/tags');
         }
     }
 }]);
-
-
