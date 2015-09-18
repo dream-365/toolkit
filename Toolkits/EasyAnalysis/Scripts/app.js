@@ -9,8 +9,8 @@ controllers.controller('discoverController', ['$scope', '$location', 'threadServ
                     $scope.state = 'search';
 
                     threadService.query($scope.URIText)
-                                 .success(function (identifier) {
-                                     $location.url('/detail/' + identifier);
+                                 .success(function (result) {
+                                     $location.url('/detail/' + result.repository + '/' + result.identifier);
                                  });
                 }
             }
@@ -20,6 +20,7 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
     function ($scope, threadService, $location, $routeParams) {
         // model state init
         $scope.identifier = $routeParams.identifier;
+        $scope.repository = $routeParams.identifier;
 
         $scope.state = 'load';
 
@@ -28,7 +29,32 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
             typeSelect: '-1'
         };
 
-        $scope.data = _global_data;
+        threadService.types($scope.identifier)
+            .success(function (data) {
+                $scope.data = data;
+
+                // load detail data
+                threadService.detail($scope.identifier)
+                             .success(function (data) {
+                                 $scope.item = data;
+
+                                 var typeId = $scope.item.TypeId;
+
+                                 var vm = calculateSelection(typeId);
+
+                                 $scope.model.categorySelect = vm.categorySelect;
+
+                                 // temp workaround to update the UI, refactor the code
+                                 // in the future
+                                 setTimeout(function () {
+                                     $scope.$apply(function () {
+                                         $scope.model.typeSelect = vm.typeSelect;
+                                     });
+                                 }, 0);
+
+                                 $scope.state = 'done';
+                             });
+            });
 
         $scope.remoteUrlRequestFn = function (str) {
             return { q: str };
@@ -57,27 +83,6 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
                 });
         });
 
-        // load data
-        threadService.detail($scope.identifier)
-                     .success(function (data) {
-                         $scope.item = data;
-
-                         var typeId = $scope.item.TypeId;
-
-                         var vm = calculateSelection(typeId);
-
-                         $scope.model.categorySelect = vm.categorySelect;
-
-                         // temp workaround to update the UI, refactor the code
-                         // in the future
-                         setTimeout(function () {
-                             $scope.$apply(function () {
-                                 $scope.model.typeSelect = vm.typeSelect;
-                             });
-                         }, 0);
-
-                         $scope.state = 'done';
-                     });
 
         $scope.Tag_click = function () {
             console.log("tag click");
@@ -98,9 +103,9 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
                 typeSelect: '-1'
             };
 
-            for(var i = 0; i < _global_data.categories.length; i++)
+            for (var i = 0; i < $scope.data.categories.length; i++)
             {
-                var group = _global_data.typeGroups[i];
+                var group = $scope.data.typeGroups[i];
 
                 for (var j = 0; j < group.length; j++)
                 {
@@ -124,7 +129,7 @@ app.config(['$routeProvider',
         when('/', {
             templateUrl: 'partials/discover.html',
             controller: 'discoverController'
-        }).when('/detail/:identifier', {
+        }).when('/detail/:repository/:identifier', {
             templateUrl: 'partials/detail.html',
             controller: 'detailController'
         });
@@ -150,6 +155,9 @@ app.factory('threadService', ['$http', function ($http) {
         },
         classify: function(threadId, typeId) {
             return $http.post('api/thread/' + threadId + '/classify/' + typeId);
+        },
+        types: function(id) {
+            return $http.get('api/thread/' + id + '/types');
         },
         detail: function (id) {
             return $http.get('api/thread/' + id + '/detail');

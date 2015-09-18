@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolderManagement", "FolderM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis", "EasyAnalysis\EasyAnalysis.csproj", "{206942C1-B7EB-4D7E-AC40-0BB3FBC58C8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadDiscovery", "ThreadDiscovery\ThreadDiscovery.csproj", "{61401A85-9EA4-4ADA-8128-8B0DA717F29C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{206942C1-B7EB-4D7E-AC40-0BB3FBC58C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{206942C1-B7EB-4D7E-AC40-0BB3FBC58C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{206942C1-B7EB-4D7E-AC40-0BB3FBC58C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61401A85-9EA4-4ADA-8128-8B0DA717F29C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61401A85-9EA4-4ADA-8128-8B0DA717F29C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61401A85-9EA4-4ADA-8128-8B0DA717F29C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61401A85-9EA4-4ADA-8128-8B0DA717F29C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

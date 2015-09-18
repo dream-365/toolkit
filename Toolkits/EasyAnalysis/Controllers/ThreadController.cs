@@ -36,6 +36,45 @@ namespace EasyAnalysis.Controllers
             return _threadRepository.Get(id);
         }
 
+
+        // TODO: CODE_REFACTOR
+        [Route("api/thread/{repository}/types"), HttpGet]
+        public CategoryResult GetTypes(string repository)
+        {
+            var provider = new TypeProvider();
+
+            var types = provider.GetTypesByRepository(repository);
+
+            var result = new CategoryResult();
+
+            var categories = types.Select(m => m.CategoryName).Distinct().ToList();
+
+            var typeGroups = new List<IEnumerable<TypeObject>>();
+
+            var tempCategories = new List<Category>();
+
+            int i = 0;
+
+            categories.ForEach((cat) =>
+            {
+                tempCategories.Add(new Category { index = i++, name = cat });
+            });
+
+            result.typeGroups = typeGroups;
+            result.categories = tempCategories;
+
+            foreach (var category in result.categories)
+            {
+                var group = types
+                    .Where(m => m.CategoryName == category.name)
+                    .Select(m => new TypeObject { id = m.Id, name = m.TypeName });
+
+                typeGroups.Add(group);
+            }
+
+            return result;
+        }
+
         [Route("api/thread/{id}/detail"), HttpGet]
         public ThreadViewModel GetDetail(string id)
         {
@@ -66,8 +105,10 @@ namespace EasyAnalysis.Controllers
         }
 
         // POST api/values
-        public async Task<string> Post([FromBody]string value)
+        public async Task<QueryResult> Post([FromBody]string value)
         {
+            bool success = false;
+
             string identifier = string.Empty;
 
             Regex urlRegex = new Regex(@"(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})");
@@ -76,19 +117,24 @@ namespace EasyAnalysis.Controllers
 
             if (!match.Success)
             {
-                return identifier;
+                return null;
             }
 
             identifier = match.Groups[0].ToString();
 
-            if (_threadRepository.Exists(identifier))
+            if (!_threadRepository.Exists(identifier))
             {
-                return identifier;
+                success = await RegisterNewThreadAsync(identifier);
+            }
+            else
+            {
+                success = true;
             }
 
-            bool success = await RegisterNewThreadAsync(identifier);
-
-            return success ? identifier : string.Empty;
+            // HARD CODE, NEED TO REFACTOR
+            return success
+                ? new QueryResult { identifier = identifier, repository = "UWP" }
+                : null;
         }
 
         [Route("api/thread/{id}/tag"), HttpPost]

@@ -12,18 +12,16 @@
             <div style="margin:10px 0 10px 0px;">
                 <div style="font-size:140%;float:left;">
                     <span ng-repeat="tag in item.Tags" class="label label-primary" ng-click="Tag_click()"  style="margin-right:5px;cursor:pointer;">{{tag}}</span>
-                </div>             
-                <!--<input id="tags" 
-                       style="width:200px;" 
-                       type="text" 
-                       class="form-control" 
-                       placeholder="Add tag and then enter" 
-                       ng-model="TagText" 
-                       ng-keypress="TagText_keypress($event)">-->
+                </div>
+                    <span 
+                          class="glyphicon mdi-content-create"
+                          style="cursor:pointer;" 
+                          ng-click="Tag_click()"
+                          aria-hidden="true"></span>
                     <div angucomplete-alt 
                          id="tags"
-                         style="width:200px;display:inline-block;"
-                         placeholder="Add tag" 
+                         style="width:150px;display:inline-block;"
+                         placeholder="NEW tag" 
                          pause="500" 
                          selected-object="selectedTag" 
                          title-field="Name" 
