@@ -1,16 +1,25 @@
 ﻿var controllers = angular.module('controllers', []);
 
-controllers.controller('discoverController', ['$scope', '$location', 'threadService',
-        function ($scope, $location, threadService) {
+
+controllers.controller('homeController', ['$scope', '$location', function ($scope, $location) {
+    $scope.navigateTo = function (repository) {
+        $location.url('/discover/' + repository);
+    }
+}]);
+
+controllers.controller('discoverController', ['$scope', '$location', 'threadService', '$routeParams',
+        function ($scope, $location, threadService, $routeParams) {
             $scope.state = 'init';
+
+            $scope.repository = $routeParams.repository;
 
             $scope.URIText_keypress = function (e) {
                 if (e.which === 13) {
                     $scope.state = 'search';
 
                     threadService.query($scope.URIText)
-                                 .success(function (result) {
-                                     $location.url('/detail/' + result.repository + '/' + result.identifier);
+                                 .success(function (identifier) {
+                                     $location.url('/detail/' + $scope.repository + '/' + identifier);
                                  });
                 }
             }
@@ -20,7 +29,7 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
     function ($scope, threadService, $location, $routeParams) {
         // model state init
         $scope.identifier = $routeParams.identifier;
-        $scope.repository = $routeParams.identifier;
+        $scope.repository = $routeParams.repository;
 
         $scope.state = 'load';
 
@@ -29,7 +38,7 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
             typeSelect: '-1'
         };
 
-        threadService.types($scope.identifier)
+        threadService.types($scope.repository)
             .success(function (data) {
                 $scope.data = data;
 
@@ -93,7 +102,7 @@ controllers.controller('detailController', ['$scope', 'threadService', '$locatio
         }
 
         $scope.back = function () {
-            $location.url('/');
+            $location.url('/discover/' + $scope.repository);
         }
 
         function calculateSelection(id)
@@ -127,6 +136,9 @@ app.config(['$routeProvider',
   function ($routeProvider) {
       $routeProvider.
         when('/', {
+            templateUrl: 'partials/home.html',
+            controller: 'homeController'
+        }).when('/discover/:repository', {
             templateUrl: 'partials/discover.html',
             controller: 'discoverController'
         }).when('/detail/:repository/:identifier', {

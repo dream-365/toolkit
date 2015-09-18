@@ -105,7 +105,7 @@ namespace EasyAnalysis.Controllers
         }
 
         // POST api/values
-        public async Task<QueryResult> Post([FromBody]string value)
+        public async Task<string> Post([FromBody]string value)
         {
             bool success = false;
 
@@ -133,7 +133,7 @@ namespace EasyAnalysis.Controllers
 
             // HARD CODE, NEED TO REFACTOR
             return success
-                ? new QueryResult { identifier = identifier, repository = "UWP" }
+                ? identifier
                 : null;
         }
 

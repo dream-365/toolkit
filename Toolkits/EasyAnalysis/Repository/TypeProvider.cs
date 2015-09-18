@@ -19,7 +19,7 @@ SELECT [Types].[Id] AS [Id]
 FROM [uwpdb].[dbo].[Types]
 INNER JOIN [uwpdb].[dbo].[Categories]
 ON [Types].[CategoryId] = [Categories].[Id]
-WHERE [Categories].[Repository] = 'UWP'
+WHERE [Categories].[Repository] = @Resp
 ";
 
         public IEnumerable<TypeModel> GetTypesByRepository(string repository)
@@ -28,7 +28,7 @@ WHERE [Categories].[Repository] = 'UWP'
 
             using (var connection = new SqlConnection(cs))
             {
-                return connection.Query<TypeModel>(_sql);
+                return connection.Query<TypeModel>(_sql, new {Resp = repository });
             }
         }
     }
