@@ -1,9 +1,28 @@
 ﻿<div>
     <div class="alert alert-info">
-        <h4>{{repository}} Repository</h4>
+        <h4>{{repository}} REPOSITORY</h4>
     </div>
     <div class="form-group" ng-show="state=='init'">
         <input type="text" class="form-control" placeholder="Put URI here and then enter" ng-model="URIText" ng-keypress="URIText_keypress($event)">
     </div>
     <div ng-show="state=='search'">Querying..., please wait for a moment :)</div>
+    <div class="alert alert-success">
+        <h5>TODO LIST</h5>
+    </div>
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Create On</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in todo" ng-click="navigateTo(item.id)" style="cursor:pointer;">
+                <td>{{item.index}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.createOn}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

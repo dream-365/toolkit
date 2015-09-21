@@ -9,6 +9,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Utility.MSDN;
+using Newtonsoft.Json;
+using System.Text;
+using System.Web.Http.Results;
 
 namespace EasyAnalysis.Controllers
 {
@@ -16,12 +19,14 @@ namespace EasyAnalysis.Controllers
     {
         private readonly IThreadRepository _threadRepository;
         private readonly ITagRepository _tagRepository;
+        private readonly FeedFactory _feedFactory;
 
         public ThreadController()
         {
             var context = new DefaultDbConext();
             _threadRepository = new ThreadRepository(context);
             _tagRepository = new TagRepository(context);
+            _feedFactory = new FeedFactory();
         }
 
         // GET api/thread
@@ -135,6 +140,27 @@ namespace EasyAnalysis.Controllers
             return success
                 ? identifier
                 : null;
+        }
+
+        [Route("api/thread/{repository}/todo"), HttpGet]
+        public IEnumerable<TodoItem> GetTodoList(string repository)
+        {
+            // TODO:CODE_REFACTOR - currently, this feature is only for UWP repostory
+            if(!repository.ToLower().Equals("uwp"))
+            {
+                return new List<TodoItem>();
+            }
+
+            var result = _feedFactory.GenerateTodoItems(repository).ToList();
+
+            int i = 1;
+
+            foreach (var todo in result)
+            {
+                todo.Index = i++;
+            }
+
+            return result;
         }
 
         [Route("api/thread/{id}/tag"), HttpPost]

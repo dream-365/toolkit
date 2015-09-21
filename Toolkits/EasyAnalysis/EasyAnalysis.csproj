@@ -192,8 +192,10 @@
     <Compile Include="Models\EFTypeConfigrations.cs" />
     <Compile Include="Models\TagSearchResult.cs" />
     <Compile Include="Models\ThreadModel.cs" />
+    <Compile Include="Models\TodoItem.cs" />
     <Compile Include="Models\TypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\FeedFactory.cs" />
     <Compile Include="Repository\ITagRepository.cs" />
     <Compile Include="Repository\IThreadRepository.cs" />
     <Compile Include="Repository\ITypeProvider.cs" />

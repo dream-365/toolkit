@@ -23,6 +23,14 @@ controllers.controller('discoverController', ['$scope', '$location', 'threadServ
                                  });
                 }
             }
+
+            $scope.navigateTo = function(id) {
+                $location.url('/detail/' + $scope.repository + '/' + id);
+            }
+
+            threadService.todo($scope.repository).success(function (data) {
+                $scope.todo = data;
+            });
         }]);
 
 controllers.controller('detailController', ['$scope', 'threadService', '$location', '$routeParams',
@@ -170,6 +178,9 @@ app.factory('threadService', ['$http', function ($http) {
         },
         types: function(id) {
             return $http.get('api/thread/' + id + '/types');
+        },
+        todo: function(repository) {
+            return $http.get('api/thread/' + repository + '/todo');
         },
         detail: function (id) {
             return $http.get('api/thread/' + id + '/detail');
