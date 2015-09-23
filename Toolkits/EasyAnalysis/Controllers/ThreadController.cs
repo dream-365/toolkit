@@ -145,12 +145,6 @@ namespace EasyAnalysis.Controllers
         [Route("api/thread/{repository}/todo"), HttpGet]
         public IEnumerable<TodoItem> GetTodoList(string repository)
         {
-            // TODO:CODE_REFACTOR - currently, this feature is only for UWP repostory
-            if(!repository.ToLower().Equals("uwp"))
-            {
-                return new List<TodoItem>();
-            }
-
             var result = _feedFactory.GenerateTodoItems(repository).ToList();
 
             int i = 1;

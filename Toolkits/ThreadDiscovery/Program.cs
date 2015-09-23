@@ -12,15 +12,16 @@ namespace ThreadDiscovery
     {
         static void Main(string[] args)
         {
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 5; i++)
             {
-                Run(i).Wait();
+                Run(Community.MSDN, "wpdevelop", i).Wait();
+                Run(Community.TECHNET, "Office2016setupdeploy%2COffice2016ITPro", i).Wait();
             }
         }
 
-        static async Task Run(int index)
+        static async Task Run(Community community, string forum, int index)
         {
-            var collection = new ThreadCollection("wpdevelop");
+            var collection = new ThreadCollection(community, forum);
 
             var threads = await collection.NavigateToPageAsync(index);
 
