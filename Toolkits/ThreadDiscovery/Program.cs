@@ -24,12 +24,12 @@ namespace ThreadDiscovery
 
             List<IThreadAnalyze> als = new List<IThreadAnalyze>();
 
-            //foreach (var keword in keywords)
-            //{
-            //    als.Add(new KeyWordCountAnalyze(keword));
-            //}
+            foreach (var keword in keywords)
+            {
+                als.Add(new KeyWordCountAnalyze(keword));
+            }
 
-            als.Add(new AskerAnalyze());
+            // als.Add(new AskerAnalyze());
 
             var snapshoot = new ForumSnapshot(Community.MSDN, "wpdevelop");
 
@@ -39,7 +39,9 @@ namespace ThreadDiscovery
 
             IDictionary<string, object> result = new Dictionary<string, object>();
 
-            foreach (ThreadInfo info in data)
+            var filter = data.Where(m => !m.Answered);
+
+            foreach (ThreadInfo info in filter)
             {
                 foreach (var al in als)
                 {
@@ -50,7 +52,7 @@ namespace ThreadDiscovery
             foreach (KeyValuePair<string, object> kv in result)
             {
                 Console.WriteLine("{0}, {1}", kv.Key, kv.Value);
-                File.WriteAllText(string.Format("{0}.txt", kv.Key), kv.Value.ToString());
+                // File.WriteAllText(string.Format("{0}.txt", kv.Key), kv.Value.ToString());
             }
         }
 

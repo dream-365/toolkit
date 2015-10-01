@@ -1,63 +1,67 @@
 ﻿<div>
-    <div class="alert alert-info">
-        <h4>{{repository}} Repository</h4>
-    </div>
-    <div class="form-group">
-        <div ng-show="state=='load'">Loading...</div>
-        <div ng-show="state=='done'">
-            <div>
-                <h4>
-                    <a ng-href="https://social.msdn.microsoft.com/Forums/windowsapps/en-US/{{identifier}}" 
-                       target="_blank">{{item.Title}}</a>
-                </h4>    
-            </div>
-            
-            <div style="margin:10px 0 10px 0px;">
-                <div style="font-size:140%;float:left;">
-                    <span ng-repeat="tag in item.Tags" class="label label-primary" ng-click="Tag_click()"  style="margin-right:5px;cursor:pointer;">{{tag}}</span>
-                </div>
-                    <span 
-                          class="glyphicon mdi-content-create"
-                          style="cursor:pointer;" 
-                          ng-click="Tag_click()"
-                          aria-hidden="true"></span>
-                    <div angucomplete-alt 
-                         id="tags"
-                         style="width:150px;display:inline-block;"
-                         placeholder="NEW tag" 
-                         pause="500" 
-                         selected-object="selectedTag" 
-                         title-field="Name" 
-                         remote-url="api/tag/search" 
-                         remote-url-request-formatter="remoteUrlRequestFn" 
-                         remote-url-data-field="Items" 
-                         minlength="1" 
-                         input-class="form-control form-control-small" 
-                         match-class="highlight" clear-selected="true"></div>
-                    <div class="form-group">
-                        <select class="form-control"
-                                style="width:200px;float:left;"
-                                ng-model="model.categorySelect"
-                                convert-to-number>
-                            <option value="-1"> -- category --</option>
-                            <option ng-repeat="option in data.categories" value="{{option.index}}">{{option.name}}</option>
-                        </select>
-                        <select class="form-control"
-                                style="width:200px;"
-                                ng-model="model.typeSelect"
-                                ng-change="typeSelectChange()"
-                                convert-to-number>
-                            <option value="-1"> -- type --</option>
-                            <option ng-repeat="option in data.typeGroups[model.categorySelect]" value="{{option.id}}">{{option.name}}</option>
-                        </select>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{repository}} REPOSITORY</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div ng-show="state=='load'">Loading...</div>
+                <div ng-show="state=='done'">
+                    <div>
+                        <h4>
+                            <a ng-href="https://social.msdn.microsoft.com/Forums/windowsapps/en-US/{{identifier}}"
+                               target="_blank">{{item.Title}}</a>
+                        </h4>
+                    </div>
+
+                    <div style="margin:10px 0 10px 0px;">
+                        <div style="font-size:140%;float:left;">
+                            <span ng-repeat="tag in item.Tags" class="label label-primary" ng-click="Tag_click()" style="margin-right:5px;cursor:pointer;">{{tag}}</span>
+                        </div>
+                        <span class="glyphicon mdi-content-create"
+                              style="cursor:pointer;"
+                              ng-click="Tag_click()"
+                              aria-hidden="true"></span>
+                        <div angucomplete-alt
+                             id="tags"
+                             style="width:150px;display:inline-block;"
+                             placeholder="NEW tag"
+                             pause="500"
+                             selected-object="selectedTag"
+                             title-field="Name"
+                             remote-url="api/tag/search"
+                             remote-url-request-formatter="remoteUrlRequestFn"
+                             remote-url-data-field="Items"
+                             minlength="1"
+                             input-class="form-control form-control-small"
+                             match-class="highlight" clear-selected="true"></div>
+                        <div class="form-group">
+                            <select class="form-control"
+                                    style="width:200px;float:left;"
+                                    ng-model="model.categorySelect"
+                                    convert-to-number>
+                                <option value="-1"> -- category --</option>
+                                <option ng-repeat="option in data.categories" value="{{option.index}}">{{option.name}}</option>
+                            </select>
+                            <select class="form-control"
+                                    style="width:200px;"
+                                    ng-model="model.typeSelect"
+                                    ng-change="typeSelectChange()"
+                                    convert-to-number>
+                                <option value="-1"> -- type --</option>
+                                <option ng-repeat="option in data.typeGroups[model.categorySelect]" value="{{option.id}}">{{option.name}}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-    </div>
 
-    <div>
-        <button type="button" class="btn btn-material-deep-purple" aria-label="BACK" ng-click="back()">            
-            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-            BACK
-        </button>
+                <div>
+                    <button type="button" class="btn btn-material-deep-purple" aria-label="BACK" ng-click="back()">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        BACK
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

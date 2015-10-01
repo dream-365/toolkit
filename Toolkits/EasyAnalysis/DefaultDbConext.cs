@@ -26,6 +26,5 @@ namespace EasyAnalysis
 
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }
