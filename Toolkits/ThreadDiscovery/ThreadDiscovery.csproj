@@ -50,7 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ForumSnapshot.cs" />
+    <Compile Include="AskerAnalyze.cs" />
+    <Compile Include="IThreadAnalyze.cs" />
+    <Compile Include="KeyWordCountAnalyze.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

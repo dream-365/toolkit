@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,30 +14,46 @@ namespace ThreadDiscovery
     {
         static void Main(string[] args)
         {
+            string[] keywords = new string[]
+            {
+                "winjs", "c#", "c++", ".net", "wpsl", "listview", "cortana", "streamsocket",
+                "mediaelement", "sqlite", "cordova", "emulator", "gridview", "contactstore",
+                "datepicker", "inkcanvas", "bug", "webauthenticationbroker", "10532", "blend",
+                "xaml"
+            };
+
+            List<IThreadAnalyze> als = new List<IThreadAnalyze>();
+
+            //foreach (var keword in keywords)
+            //{
+            //    als.Add(new KeyWordCountAnalyze(keword));
+            //}
+
+            als.Add(new AskerAnalyze());
+
             var snapshoot = new ForumSnapshot(Community.MSDN, "wpdevelop");
 
             snapshoot.Load(@"D:\Archive\uwp_page_0_35.json");
 
             var data = snapshoot.GetData();
 
-            int count = 0;
+            IDictionary<string, object> result = new Dictionary<string, object>();
 
             foreach (ThreadInfo info in data)
             {
-                var body = info.Messages.First().Body;
-
-                if (
-                    info.Messages.First().Body.ToLowerInvariant().Contains("winjs") ||
-                    info.Title.ToLowerInvariant().Contains("winjs"))
+                foreach (var al in als)
                 {
-                    Console.WriteLine(info.Title);
-
-                    count++;
+                    al.Analyze(result, info);
                 }
             }
 
-            Console.WriteLine("Total: {0}", count);
+            foreach (KeyValuePair<string, object> kv in result)
+            {
+                Console.WriteLine("{0}, {1}", kv.Key, kv.Value);
+                File.WriteAllText(string.Format("{0}.txt", kv.Key), kv.Value.ToString());
+            }
         }
+
 
         private static void SaveSanpshot()
         {
