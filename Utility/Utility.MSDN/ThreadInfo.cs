@@ -5,17 +5,25 @@ using System.Web;
 
 namespace Utility.MSDN
 {
+    public enum ThreadType
+    {
+        Discussion,
+        Question
+    }
+
     public class ThreadInfo
     {
-        public String Id { get; set; }
+        public string Id { get; set; }
 
-        public String Title { get; set; }
+        public string Title { get; set; }
+
+        public int Views { get; set; }
 
         public bool Answered { get; set; }
 
         public DateTime CreateOn { get; set; }
 
-        public String Url { get; set; }
+        public string Url { get; set; }
 
         public string AuthorId { get; set; }
 

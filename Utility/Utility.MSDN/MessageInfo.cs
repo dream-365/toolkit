@@ -7,7 +7,7 @@ namespace Utility.MSDN
 {
     public class MessageInfo
     {
-        public String Id { get; set; }
+        public string Id { get; set; }
 
         public UserInfo Author { get; set; }
 

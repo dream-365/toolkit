@@ -27,6 +27,28 @@ namespace EasyAnalysis.Models
         public ICollection<Tag> Tags { get; set; }
     }
 
+
+    public class ThreadImportModel
+    {
+        public ThreadImportModel()
+        {
+            Tags = new List<string>();
+        }
+
+        public string Id { get; set; }
+
+        public string Title { get; set; }
+
+        public DateTime CreateOn { get; set; }
+
+        public string ForumId { get; set; }
+
+        public string AuthorId { get; set; }
+
+        public ICollection<string> Tags { get; set; }
+    }
+
+
     public class ThreadViewModel
     {
         public string Id { get; set; }

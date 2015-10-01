@@ -216,8 +216,14 @@ namespace EasyAnalysis.Controllers
             }
         }
 
+        [Route("api/thread/import"), HttpPost]
+        public void Import([FromBody]ThreadImportModel model)
+        {
+
+        }
+
         // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(string id, [FromBody]ThreadModel value)
         {
             // Not Support
         }

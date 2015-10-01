@@ -84,6 +84,7 @@ namespace Utility.MSDN
                     Url = xThread.Element("url") == null ? string.Empty : xThread.Element("url").Value,
                     CreateOn = DateTime.Parse(xThread.Element("createdOn") == null ? string.Empty : xThread.Element("createdOn").Value), 
                     Answered = Boolean.Parse(xThread.Attribute("answered") == null ? "false" : xThread.Attribute("answered").Value),
+                    Views = int.Parse(xThread.Attribute("views") == null ? string.Empty : xThread.Attribute("views").Value),
                     ForumId = xThread.Attribute("discussionGroupId") == null ? string.Empty : xThread.Attribute("discussionGroupId").Value,
                     Messages = messages
                 };

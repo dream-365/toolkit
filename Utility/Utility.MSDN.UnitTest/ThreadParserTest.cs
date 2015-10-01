@@ -22,7 +22,7 @@ namespace Utility.MSDN.UnitTest
         [TestMethod]
         public async Task ThreadCollectionTest()
         {
-            var collection = new ThreadCollection("wpdevelop");
+            var collection = new ThreadCollection(Community.MSDN, "wpdevelop");
 
             var threads = await collection.NavigateToPageAsync(1);
 
