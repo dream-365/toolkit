@@ -9,6 +9,14 @@ namespace Utility.MSDN.UnitTest
     public class ThreadParserTest
     {
         [TestMethod]
+        public void UriTest()
+        {
+            var uri = new Uri("https://social.msdn.microsoft.com/Forums/windowsapps/en-US/home?forum=wpdevelop&filter=alltypes&sort=firstpostdesc");
+
+            var host = uri.Host;
+        }
+
+        [TestMethod]
         public async Task ReadThreadInfoTest()
         {
             var parser = new ThreadParser(Guid.Parse("18273ef6-92f8-4f11-818d-7e3b8470307a"));

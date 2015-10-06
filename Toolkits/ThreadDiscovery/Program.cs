@@ -7,12 +7,58 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Utility.MSDN;
+using Utility.HttpCache;
+using Newtonsoft.Json;
 
 namespace ThreadDiscovery
 {
     class Program
     {
         static void Main(string[] args)
+        {
+
+        }
+
+        private static void FroumCacheDemo()
+        {
+            var provider = DefaultLocalFileSystemHttpCacheProvider.Current;
+
+            Regex urlRegex = new Regex(@"(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})");
+
+            var resolver = new RegexPathResolver(urlRegex, "thread_id_{1}.xml");
+
+            provider.Configure(@"D:\httpcache", resolver);
+
+            var collection = new ThreadCollection(Community.MSDN, "wpdevelop");
+
+            var task = collection.NavigateToPageAsync(1);
+
+            task.Wait();
+
+            var threads = task.Result;
+
+            var client = new HttpClient();
+
+            foreach (var thread in threads)
+            {
+                var urlString = thread + "&outputAs=xml";
+
+                var uri = new Uri(urlString);
+
+                if (provider.IsCached(uri))
+                {
+                    continue;
+                }
+
+                var httpTask = client.GetStreamAsync(uri);
+
+                httpTask.Wait();
+
+                provider.Cache(httpTask.Result, uri);
+            }
+        }
+
+        private static void Analyze()
         {
             string[] keywords = new string[]
             {
@@ -55,7 +101,6 @@ namespace ThreadDiscovery
                 // File.WriteAllText(string.Format("{0}.txt", kv.Key), kv.Value.ToString());
             }
         }
-
 
         private static void SaveSanpshot()
         {

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis", "EasyAnalysi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadDiscovery", "ThreadDiscovery\ThreadDiscovery.csproj", "{61401A85-9EA4-4ADA-8128-8B0DA717F29C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCache", "WebCache\WebCache.csproj", "{B42E401F-B107-46B3-9B83-2E6413B17172}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{61401A85-9EA4-4ADA-8128-8B0DA717F29C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61401A85-9EA4-4ADA-8128-8B0DA717F29C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61401A85-9EA4-4ADA-8128-8B0DA717F29C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42E401F-B107-46B3-9B83-2E6413B17172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B42E401F-B107-46B3-9B83-2E6413B17172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B42E401F-B107-46B3-9B83-2E6413B17172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B42E401F-B107-46B3-9B83-2E6413B17172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
