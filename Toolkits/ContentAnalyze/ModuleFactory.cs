@@ -8,13 +8,14 @@ namespace ContentAnalyze
 {
     public class ModuleFactory
     {
-        public IContentModule Create(string name, IEnumerable<string> parameters)
+        public IMetadataModule Create(string name, IEnumerable<string> parameters)
         {
-            IContentModule module;
+            IMetadataModule module;
 
             switch(name.ToLowerInvariant())
             {
                 case "xpath-kv-module": module = new XPathKeyValueModule(); break;
+                case "xpath-attribute-module": module = new XPathAttributeModule(); break;
                 default: module = null; break;            
             }
 

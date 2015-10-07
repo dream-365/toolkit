@@ -12,7 +12,7 @@ namespace WebCache
     {
         static void Main(string[] args)
         {
-            var text = File.ReadAllText("tasks.json");
+            var text = File.ReadAllText("webcache.tasks.json");
 
             var tasks = JsonConvert
                 .DeserializeObject<IEnumerable<WebCacheServiceTask>>(text);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ContentAnalyze
 {
-    public class XPathKeyValueModule : IContentModule
+    public class XPathKeyValueModule : IMetadataModule
     {
         private string _xpath;
 

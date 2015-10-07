@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ContentAnalyze
 {
-    public interface IContentModule
+    public interface IMetadataModule
     {
         void Init(IEnumerable<string> arguments);
 

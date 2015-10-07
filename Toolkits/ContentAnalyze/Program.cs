@@ -28,7 +28,7 @@ namespace ContentAnalyze
 
             var encoding = Encoding.GetEncoding(config.Encoding);
 
-            var modules = new List<IContentModule>();
+            var modules = new List<IMetadataModule>();
 
             foreach(var moduleConfig in config.Modules)
             {
@@ -71,7 +71,7 @@ namespace ContentAnalyze
             File.WriteAllText(config.OutputTo, text);
         }
 
-        private static void Process(Encoding encoding, IContentModule al, Dictionary<string, object> result, FileInfo file)
+        private static void Process(Encoding encoding, IMetadataModule al, Dictionary<string, object> result, FileInfo file)
         {
             using (var memStream = new MemoryStream())
             {
