@@ -7,13 +7,19 @@ using System.Threading.Tasks;
 
 namespace ContentAnalyze
 {
-    public class ContentProcessTaskConfigration
+    public class ModuleConfigration
     {
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("module")]
-        public string Module { get; set; }
+        [JsonProperty("arguments")]
+        public IEnumerable<string> Arguments { get; set; }
+    }
+
+    public class ContentProcessTaskConfigration
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
         [JsonProperty("root_folder")]
         public string RootFolder { get; set; }
@@ -27,7 +33,7 @@ namespace ContentAnalyze
         [JsonProperty("output_to")]
         public string OutputTo { get; set; }
 
-        [JsonProperty("arguments")]
-        public IEnumerable<string> Arguments { get; set; }
+        [JsonProperty("modules")]
+        public IEnumerable<ModuleConfigration> Modules { get; set; }
     }
 }

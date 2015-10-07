@@ -1,13 +1,19 @@
 [
   {
     "name": "TEST",
-    "module": "sentences-module",
     "root_folder": "D:\\Test",
     "encoding": "GB2312",
     "file_name_pattern": "",
     "output_to": "D\\Output\\result.txt",
-    "arguments": [
-      "x-path"
+    "modules": [
+      {
+        "name": "sentences-module",
+        "arguments": [
+          "x-path",
+          "pattern",
+          "metadata_key"
+        ]
+      }
     ]
   }
 ]

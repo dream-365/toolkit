@@ -56,7 +56,7 @@
     <Compile Include="ModuleFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SentencesModule.cs" />
+    <Compile Include="XPathKeyValueModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="analysis.tasks.json" />

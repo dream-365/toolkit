@@ -9,21 +9,15 @@ using System.Threading.Tasks;
 
 namespace ContentAnalyze
 {
-    public class SentencesModule : IContentModule
+    public class XPathKeyValueModule : IContentModule
     {
         private string _xpath;
 
         private string _pattern;
 
-        private const string RESULT_KEY = "sentences_module_key";
+        private string _metadataKey;
 
-        public string ResultKey
-        {
-            get
-            {
-                return RESULT_KEY;
-            }
-        }
+        private const string DEFAULT_METADATA_KEY = "sentences_module_key";
 
         public void Init(IEnumerable<string> arguments)
         {
@@ -33,9 +27,12 @@ namespace ContentAnalyze
 
             _pattern = args.Length > 1 ? args[1]
                                        : string.Empty;
+
+            _metadataKey = args.Length > 2 ? args[2]
+                                           : DEFAULT_METADATA_KEY;
         }
 
-        public void OnProcess(IDictionary<string, object> result, string content)
+        public void OnProcess(IDictionary<string, object> metadata, string content)
         {
             var htmlDocument = new HtmlDocument();
 
@@ -50,21 +47,19 @@ namespace ContentAnalyze
                 return;
             }
 
-            var list = GetOrCreate(result);
-
             var rawText = node.InnerText;
 
             if (_pattern != string.Empty)
             {
-                CaptureMatch(list, rawText);
+                CaptureMatch(metadata, rawText);
             }
             else
             {
-                list.Add(node.InnerText);
+                metadata[_metadataKey] = node.InnerText;
             }            
         }
 
-        private void CaptureMatch(IList<string> list, string rawText)
+        private void CaptureMatch(IDictionary<string, object> metadata, string rawText)
         {
             var regex = new Regex(_pattern);
 
@@ -76,10 +71,10 @@ namespace ContentAnalyze
 
                 foreach (Match match in matches)
                 {
-                    sb.Append(match.Value);
+                    sb.AppendLine(match.Value);
                 }
 
-                list.Add(sb.ToString());
+                metadata[_metadataKey] = sb.ToString();
             }
             else
             {
@@ -89,14 +84,14 @@ namespace ContentAnalyze
 
         private IList<string> GetOrCreate(IDictionary<string, object> result)
         {
-            if(result.ContainsKey(RESULT_KEY))
+            if(result.ContainsKey(DEFAULT_METADATA_KEY))
             {
-                return result[RESULT_KEY] as IList<string>;
+                return result[DEFAULT_METADATA_KEY] as IList<string>;
             }
 
             var list = new List<string>();
 
-            result[RESULT_KEY] = list;
+            result[DEFAULT_METADATA_KEY] = list;
 
             return list;
         }

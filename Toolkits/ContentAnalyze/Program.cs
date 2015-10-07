@@ -28,38 +28,47 @@ namespace ContentAnalyze
 
             var encoding = Encoding.GetEncoding(config.Encoding);
 
-            var al = factory.Create(config.Module, config.Arguments);
+            var modules = new List<IContentModule>();
 
-            var result = new Dictionary<string, object>();
+            foreach(var moduleConfig in config.Modules)
+            {
+                var al = factory.Create(moduleConfig.Name, moduleConfig.Arguments);
+
+                modules.Add(al);
+            }
 
             var rootFolder = new DirectoryInfo(config.RootFolder);
 
             var files = rootFolder.EnumerateFiles();
 
+            var result = new List<Dictionary<string, object>>();
+
             Console.WriteLine("load file [{0}]", files.Count());
 
             foreach (var file in files)
             {
+                var meatadata = new Dictionary<string, object>();
+
+                meatadata["file_name"] = file.Name;
+
                 try
                 {
-                    Process(encoding, al, result, file);
-                }catch(Exception e)
+                    foreach (var module in modules)
+                    {
+                        Process(encoding, module, meatadata, file);
+                    }
+
+                    result.Add(meatadata);
+                }
+                catch(Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
             }
 
-            if (result.ContainsKey(al.ResultKey))
-            {
-                var text = JsonConvert.SerializeObject(result[al.ResultKey], Formatting.Indented);
+            var text = JsonConvert.SerializeObject(result, Formatting.Indented);
 
-                File.WriteAllText(config.OutputTo, text);
-            }
-            else
-            {
-                Console.WriteLine("No result");
-            }
-
+            File.WriteAllText(config.OutputTo, text);
         }
 
         private static void Process(Encoding encoding, IContentModule al, Dictionary<string, object> result, FileInfo file)

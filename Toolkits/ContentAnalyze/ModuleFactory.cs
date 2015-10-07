@@ -14,7 +14,7 @@ namespace ContentAnalyze
 
             switch(name.ToLowerInvariant())
             {
-                case "sentences-module": module = new SentencesModule(); break;
+                case "xpath-kv-module": module = new XPathKeyValueModule(); break;
                 default: module = null; break;            
             }
 

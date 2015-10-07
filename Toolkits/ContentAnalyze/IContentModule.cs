@@ -9,10 +9,8 @@ namespace ContentAnalyze
 {
     public interface IContentModule
     {
-        string ResultKey { get; }
-
         void Init(IEnumerable<string> arguments);
 
-        void OnProcess(IDictionary<string, object> result, string content);
+        void OnProcess(IDictionary<string, object> metadata, string content);
     }
 }
