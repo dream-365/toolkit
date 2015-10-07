@@ -25,7 +25,7 @@ namespace Utility.MSDN
         {
             ThreadInfo ret = null;
 
-            var url = String.Format(MSDN_URL_FMT, _threadId);
+            var url = string.Format(MSDN_URL_FMT, _threadId);
 
             try
             {

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadDiscovery", "ThreadDi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCache", "WebCache\WebCache.csproj", "{B42E401F-B107-46B3-9B83-2E6413B17172}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentAnalyze", "ContentAnalyze\ContentAnalyze.csproj", "{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B42E401F-B107-46B3-9B83-2E6413B17172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B42E401F-B107-46B3-9B83-2E6413B17172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B42E401F-B107-46B3-9B83-2E6413B17172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
