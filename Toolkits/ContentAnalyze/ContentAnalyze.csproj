@@ -54,6 +54,7 @@
     <Compile Include="ContentAnalyeTaskConfigration.cs" />
     <Compile Include="HtmlAttributesLookUp.cs" />
     <Compile Include="IMetadataModule.cs" />
+    <Compile Include="JsonDocument.cs" />
     <Compile Include="ModuleFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="WebCacheService.cs" />
     <Compile Include="WebCacheServiceTask.cs" />
   </ItemGroup>

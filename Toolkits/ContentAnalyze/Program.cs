@@ -12,17 +12,24 @@ namespace ContentAnalyze
     {
         static void Main(string[] args)
         {
-            var configText = File.ReadAllText("content.analyze.tasks.json");
+            if(args.Length == 0)
+            {
+                var configText = File.ReadAllText("content.analyze.tasks.json");
 
-            var configrations =
-                JsonConvert.DeserializeObject<IEnumerable<ContentProcessTaskConfigration>>(configText);
+                var configrations =
+                    JsonConvert.DeserializeObject<IEnumerable<ContentProcessTaskConfigration>>(configText);
 
-            var config = configrations.FirstOrDefault();
+                var config = configrations.FirstOrDefault();
 
-            Run(config);
+                ParseMetadata(config);
+            }
+            else
+            {
+                var option = args[0];
+            }
         }
 
-        private static void Run(ContentProcessTaskConfigration config)
+        private static void ParseMetadata(ContentProcessTaskConfigration config)
         {
             var factory = new ModuleFactory();
 

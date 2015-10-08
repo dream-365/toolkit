@@ -26,7 +26,10 @@ namespace Utility.HttpCache
 
             _filterPattern = filterPattern;
 
-            _baseUri = new Uri(baseUri);
+            if(!string.IsNullOrEmpty((baseUri)))
+            {
+                _baseUri = new Uri(baseUri);
+            } 
         }
 
         public IEnumerable<Uri> Discover(string content)

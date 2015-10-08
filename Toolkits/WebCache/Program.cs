@@ -15,7 +15,7 @@ namespace WebCache
             var text = File.ReadAllText("webcache.tasks.json");
 
             var tasks = JsonConvert
-                .DeserializeObject<IEnumerable<WebCacheServiceTask>>(text);
+                .DeserializeObject<IEnumerable<WebCacheTask>>(text);
 
             int index = 0;
 
@@ -30,7 +30,7 @@ namespace WebCache
 
             int number;
 
-            WebCacheServiceTask selected = null;
+            WebCacheTask selected = null;
 
             if (int.TryParse(input, out number)
                 && number > -1

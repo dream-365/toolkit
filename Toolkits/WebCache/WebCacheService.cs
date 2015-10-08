@@ -12,38 +12,35 @@ namespace WebCache
 {
     public class WebCacheService
     {
-        public async Task RunAsync(WebCacheServiceTask task)
+        public async Task RunAsync(WebCacheTask task)
         {
             var httpClient = new HttpClient();
 
-            var headers = httpClient.DefaultRequestHeaders;
+            Utility.SetGeneralHttpHeaders(httpClient);
 
-            headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-            headers.Add("Cache-Control", "keep-alive");
-            headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3");
-            headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0");
-
-            var frame = new IndexPageNavigation(task.PageNavigationUriFormat);
+            var frame = new IndexPageNavigation(task.Pagination.NavigationUriFormat);
 
             var encoding = Encoding.GetEncoding(task.Encoding);
 
             var cacheProvider = DefaultLocalFileSystemHttpCacheProvider.Current;
 
-            Regex urlRegex = new Regex(task.CacheProviderUriPattern);
+            Regex urlRegex = new Regex(task.Cache.UriToPathTransform.Pattern);
 
-            var resolver = new RegexPathResolver(urlRegex, task.CacheProviderPathFormat);
+            var resolver = new RegexPathResolver(urlRegex, task.Cache.UriToPathTransform.TargetFormat);
 
-            cacheProvider.Configure(task.CacheProviderRootFolder, resolver);
+            cacheProvider.Configure(task.Cache.RootFolder, resolver);
 
-            var discovery = new XPathUriDiscovery(task.HtmlNodeXPath,
-                task.HtmlNodeAttribute,
-                string.IsNullOrEmpty(task.UriFilterPattern)
+            var discovery = new XPathUriDiscovery(task.Pagination.Lookup.XPath,
+                task.Pagination.Lookup.Attribute,
+                string.IsNullOrEmpty(task.Pagination.UriFilter)
                 ? null
-                : new Regex(task.UriFilterPattern),
-                task.BasicUri
+                : new Regex(task.Pagination.UriFilter),
+                task.Pagination.BasicUri
                 );
 
-            for (int i = task.StartPage; i < task.StartPage + task.PageLength; i++)
+            for (int i = task.Pagination.StartPage; 
+                 i < task.Pagination.StartPage + task.Pagination.PageLength; 
+                 i++)
             {
                 frame.NavigateTo(i);
 
@@ -57,30 +54,88 @@ namespace WebCache
 
                 var uris = discovery.Discover(text);
 
-                foreach(var uri in uris)
-                {
-                    
-                    try
-                    {
-                        if (!cacheProvider.IsCached(uri))
-                        {
-                            using (var stream = await httpClient.GetStreamAsync(uri))
-                            {
-                                cacheProvider.Cache(stream, uri);
-                            }
+                uris = TransformIfNeeded(task, uris);
 
-                            Console.WriteLine(string.Format("[New]{0}", uri));
-                        }
-                        else
-                        {
-                            Console.WriteLine(string.Format("[Cached]{0}", uri));
-                        }
-                    }catch(Exception e)
+                await CacheAll(httpClient, cacheProvider, uris);
+            }
+        }
+
+        private static async Task CacheAll(HttpClient httpClient, DefaultLocalFileSystemHttpCacheProvider cacheProvider, IEnumerable<Uri> uris)
+        {
+            foreach (var uri in uris)
+            {
+                try
+                {
+                    if (!cacheProvider.IsCached(uri))
                     {
-                        Console.WriteLine(e.Message);
+                        using (var stream = await httpClient.GetStreamAsync(uri))
+                        {
+                            cacheProvider.Cache(stream, uri);
+                        }
+
+                        Console.WriteLine(string.Format("[New]{0}", uri));
+                    }
+                    else
+                    {
+                        Console.WriteLine(string.Format("[Cached]{0}", uri));
                     }
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
+        }
+
+        private static IEnumerable<Uri> TransformIfNeeded(WebCacheTask task, IEnumerable<Uri> uris)
+        {
+            if (task.Pagination.UriTransform != null)
+            {
+                var tfg = task.Pagination.UriTransform;
+
+                var regex = new Regex(tfg.Pattern);
+
+                var tranformedUris = new List<Uri>();
+
+                uris.ToList().ForEach((uri) =>
+                {
+                    string output;
+                    if (TryTransform(regex, tfg.TargetFormat, uri.ToString(), out output))
+                    {
+                        tranformedUris.Add(new Uri(output));
+                    }
+                });
+
+                uris = tranformedUris;
+            }
+
+            return uris;
+        }
+
+        private static bool TryTransform(Regex pattern, 
+            string expression, 
+            string value,
+            out string output)
+        {
+            var match = pattern.Match(value);
+
+            if(!match.Success)
+            {
+                output = string.Empty;
+
+                return false;
+            }
+
+            var groupValueList = new List<string>();
+
+            foreach (Group group in match.Groups)
+            {
+                groupValueList.Add(group.Value);
+            }
+
+            output = string.Format(expression, groupValueList.ToArray());
+
+            return true;
         }
     }
 }
