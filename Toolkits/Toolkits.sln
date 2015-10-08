@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCache", "WebCache\WebCac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentAnalyze", "ContentAnalyze\ContentAnalyze.csproj", "{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDBAnalysis", "MongoDBAnalysis\MongoDBAnalysis.csproj", "{69166CF7-0861-40D1-8C23-667EB999406E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CEBB9A9-5ABD-4DC7-80C6-E497EB55AC40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69166CF7-0861-40D1-8C23-667EB999406E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69166CF7-0861-40D1-8C23-667EB999406E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69166CF7-0861-40D1-8C23-667EB999406E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69166CF7-0861-40D1-8C23-667EB999406E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

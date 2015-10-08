@@ -16,6 +16,7 @@ namespace ContentAnalyze
             {
                 case "xpath-kv-module": module = new XPathKeyValueModule(); break;
                 case "xpath-attribute-module": module = new XPathAttributeModule(); break;
+                case "msdn-xml-module": module = new MSDNThreadMeatadataModule(); break;
                 default: module = null; break;            
             }
 
