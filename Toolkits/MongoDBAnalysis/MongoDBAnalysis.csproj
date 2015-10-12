@@ -67,6 +67,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\export_user_profiles.js" />
+    <Content Include="Scripts\list_user_threads.js" />
+    <Content Include="Scripts\map_reduce_user_tags.js" />
+    <Content Include="Scripts\update_tags_to_user_profile.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
