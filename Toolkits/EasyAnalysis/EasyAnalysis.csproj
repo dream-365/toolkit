@@ -219,6 +219,7 @@
     <Content Include="partials\discover.html" />
     <Content Include="partials\home.html" />
     <Content Include="partials\loading.html" />
+    <Content Include="partials\askers.html" />
     <Content Include="Scripts\angucomplete-alt.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -228,6 +229,7 @@
     <None Include="Properties\PublishProfiles\easyanalysis - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\easyanalysis - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\controllers\askersController.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

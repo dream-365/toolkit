@@ -59,7 +59,8 @@ namespace ContentAnalyze
                                     { "id", c.Attribute("id").Value },
                                     { "authorId", c.Attribute("authorId").Value },
                                     { "createdOn", c.Element("createdOn").Value },
-                                    { "body", c.Element("body").Value }
+                                    { "body", c.Element("body").Value },
+                                    { "is_answer", c.Element("answer") == null ? "false" : c.Element("answer").Value}
                                 }).ToList();
 
                 var xThread = xDoc.Element("root").Element("thread");

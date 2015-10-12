@@ -152,6 +152,9 @@ app.config(['$routeProvider',
         }).when('/detail/:repository/:identifier', {
             templateUrl: 'partials/detail.html',
             controller: 'detailController'
+        }).when('/askers/:repository', {
+            templateUrl: 'partials/askers.html',
+            controller: 'askersController'
         });
   }]);
 
