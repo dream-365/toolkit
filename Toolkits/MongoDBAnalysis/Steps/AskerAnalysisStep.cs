@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,26 +14,69 @@ using System.Threading.Tasks;
 
 namespace MongoDBAnalysis
 {
-    public class AskerAnalysis
+    public class AskerAnalysisStep : IStep
     {
         private IMongoCollection<BsonDocument> _userCollection;
 
         private IMongoCollection<BsonDocument> _threadCollection;
 
+        private IMongoCollection<BsonDocument> _askerActivities;
+
+        private readonly string _repository;
+
+        private readonly string _month;
+
         private IMongoDatabase _database;
 
-        public AskerAnalysis(string collection)
+        public string Description
         {
-            var client = new MongoClient("mongodb://rpt:$DB$1passAz@app-svr.cloudapp.net:27017/forums");
+            get
+            {
+                return "Run asker analysis to extract the actions of askers";
+            }
+        }
 
-            _database = client.GetDatabase("forums");
+        public AskerAnalysisStep(string database, string repository, string month)
+        {
+            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + _database);
+
+            _repository = repository;
+
+            _month = month;
+
+            _database = client.GetDatabase(database);
 
             _userCollection = _database.GetCollection<BsonDocument>("users");
 
-            _threadCollection = _database.GetCollection<BsonDocument>(collection);
+            _threadCollection = _database.GetCollection<BsonDocument>(repository + "_" + month + "_" + "threads");
+
+            _askerActivities = _database.GetCollection<BsonDocument>(repository + "_" + "asker_activities");
         }
 
-        public async Task ExportTop20Asker(string exportPath)
+        public async Task RunAsync()
+        {
+            var result = new Dictionary<string, dynamic>();
+
+            await MapBasicInfo(result);
+
+            result.Select(m => m.Value).ToList().ForEach(async (item)=> {
+
+                item.month = _month;
+
+                var line = Newtonsoft.Json.JsonConvert.SerializeObject(item, Formatting.Indented);
+
+                using (var jsonReader = new MongoDB.Bson.IO.JsonReader(line))
+                {
+                    var context = BsonDeserializationContext.CreateRoot(jsonReader);
+
+                    var document = _askerActivities.DocumentSerializer.Deserialize(context);
+
+                    await _askerActivities.InsertOneAsync(document);
+                }
+            });
+        }
+
+        public async Task ExportAskers(string exportPath)
         {
             var result = new Dictionary<string, dynamic>();
 
@@ -49,7 +93,6 @@ namespace MongoDBAnalysis
                 .Aggregate()
                 .Group("{ _id : '$authorId', total: { $sum: 1 } }")
                 .Sort("{total: -1}")
-                .Limit(20)
                 .ForEachAsync(async (item) =>
                 {
                     var userId = item.GetElement("_id").Value.AsString;
@@ -82,6 +125,9 @@ namespace MongoDBAnalysis
                     container.threads = await GetThreadsByUser(userId);
 
                     container.answered = answered;
+
+                    // display the progress
+                    Console.Write(".");
                 });
         }
 
@@ -121,7 +167,7 @@ namespace MongoDBAnalysis
                                      
                                  }catch(Exception ex)
                                  {
-                                     Console.WriteLine(ex.Message);
+                                     Console.Write("x");
                                  }
 
                                  list.Add(thread);

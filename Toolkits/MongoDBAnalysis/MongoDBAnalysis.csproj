@@ -58,9 +58,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AskerAnalysis.cs" />
+    <Compile Include="Steps\AskerAnalysisStep.cs" />
+    <Compile Include="Steps\ImportNewUsersStep.cs" />
+    <Compile Include="Steps\IStep.cs" />
+    <Compile Include="Steps\MapReduceMonthlyAskerTagsStep.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\UpdateMonthlyAskerTagsToAskerActivityStep.cs" />
     <Compile Include="UserAnalysisExample.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +72,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="readme.txt" />
     <Content Include="Scripts\export_user_profiles.js" />
     <Content Include="Scripts\list_user_threads.js" />
     <Content Include="Scripts\map_reduce_user_tags.js" />

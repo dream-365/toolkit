@@ -16,9 +16,31 @@ namespace MongoDBAnalysis
     {
         static void Main(string[] args)
         {
-            var anslysis = new AskerAnalysis("uwp_sep_threads");
+            if (args.Length < 2)
+            {
+                Console.WriteLine("arguments: {database} {repository} {month}");
 
-            anslysis.ExportTop20Asker("top_20_askers.json").Wait();
+                return;
+            }
+
+            string database = args[0];
+
+            string repository = args[1];
+
+            string month = args[2];
+
+            IList<IStep> steps = new List<IStep>
+            {
+                new ImportNewUsersStep(database, repository, month),
+                new AskerAnalysisStep(database, repository, month),
+                new MapReduceMonthlyAskerTagsStep(database, repository, month),
+                new UpdateMonthlyAskerTagsToAskerActivityStep(database, repository, month)
+            };
+
+            foreach(var step in steps)
+            {
+                step.RunAsync().Wait();
+            }
         }
 
         private static void ExportJsonData()
@@ -62,7 +84,7 @@ namespace MongoDBAnalysis
         {
             var example = new UserAnalysisExample();
 
-            var task = example.RunAnswerAnalysis("mscs");
+            var task = example.RunAnswerAnalysis("msft");
 
             task.Wait();
 
