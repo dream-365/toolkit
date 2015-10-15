@@ -39,6 +39,7 @@ namespace MongoDBAnalysis
 
             foreach(var step in steps)
             {
+                Console.WriteLine(step.Description);
                 step.RunAsync().Wait();
             }
         }

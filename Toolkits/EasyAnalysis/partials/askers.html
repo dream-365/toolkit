@@ -1,26 +1,62 @@
-﻿<div>
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Top 20 askers in {{repository}} REPOSITORY</h3>
+﻿<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Active Askers</h3>
+                </div>
+                <div class="panel-body">
+                    {{monthly_summary.active_user_group_count}} users
+                </div>
+            </div>
         </div>
-        <div class="panel-body">
-            <div class="list-group" style="font-size:140%;">
-                <div ng-repeat="profile in user_profiles">
-                    <div class="list-group-item">
-                        <div class="row-action-primary">
-                            <i class="mdi-file-folder"></i>
-                        </div>
-                        <div class="row-content">
-                            <h4 class="list-group-item-heading">{{profile.display_name}}</h4>
-                            <p class="list-group-item-text">Asked <b>{{profile.total}}</b> questions, <b style="color:green">{{profile.answered}}</b> of them are answered</p>
-                            <div>
-                                <span ng-repeat="tag in profile.tags"
-                                      class="label label-primary"
-                                      style="margin-right:5px;cursor:pointer;">{{tag.name}} * {{tag.count}}</span>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">New Askers</h3>
+                </div>
+                <div class="panel-body">
+                    {{monthly_summary.new_user_group_count}} users
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Strike Askers</h3>
+                </div>
+                <div class="panel-body">
+                    {{monthly_summary.strike_user_group_count}} users
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Top 20 askers in {{repository}} REPOSITORY</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group" style="font-size:140%;">
+                        <div ng-repeat="profile in user_profiles">
+                            <div class="list-group-item">
+                                <div class="row-action-primary">
+                                    <i class="mdi-file-folder"></i>
+                                </div>
+                                <div class="row-content">
+                                    <h4 class="list-group-item-heading">{{profile.display_name}}</h4>
+                                    <p class="list-group-item-text">Asked <b>{{profile.total}}</b> questions, <b style="color:green">{{profile.answered}}</b> of them are answered</p>
+                                    <div>
+                                        <span ng-repeat="tag in profile.tags"
+                                              class="label label-primary"
+                                              style="margin-right:5px;cursor:pointer;display:inline-block;">{{tag.name}}*{{tag.count}}</span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="list-group-separator"></div>
                         </div>
                     </div>
-                    <div class="list-group-separator"></div>
                 </div>
             </div>
         </div>

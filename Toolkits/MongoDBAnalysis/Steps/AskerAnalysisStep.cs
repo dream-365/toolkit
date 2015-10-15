@@ -59,6 +59,11 @@ namespace MongoDBAnalysis
 
             await MapBasicInfo(result);
 
+            // clean all of the old data.
+            var filter = Builders<BsonDocument>.Filter.Eq("month", _month);
+
+            await _askerActivities.DeleteManyAsync(filter);
+
             result.Select(m => m.Value).ToList().ForEach(async (item)=> {
 
                 item.month = _month;
