@@ -20,19 +20,19 @@ namespace MongoDBAnalysis
 
         private readonly string _month;
 
-        public ImportNewUsersStep(string database, string repository, string month)
+        public ImportNewUsersStep(string repository, string month)
         {
             _repository = repository;
 
             _month = month;
 
-            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + database);
+            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
 
-            _database = client.GetDatabase(database);
+            _database = client.GetDatabase(repository);
 
             _userCollection = _database.GetCollection<BsonDocument>("users");
 
-            _threadCollection = _database.GetCollection<BsonDocument>(_repository + "_" + _month + "_" + "threads");
+            _threadCollection = _database.GetCollection<BsonDocument>(_month + "_" + "threads");
         }
 
         public string Description

@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CacheManagement.cs" />
     <Compile Include="IndexPageNavigation.cs" />
     <Compile Include="HttpCacheClient.cs" />
     <Compile Include="IHttpCacheProvider.cs" />

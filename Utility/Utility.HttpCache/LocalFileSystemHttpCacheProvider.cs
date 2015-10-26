@@ -16,9 +16,8 @@ namespace Utility.HttpCache
 
         public static DefaultLocalFileSystemHttpCacheProvider Current = new DefaultLocalFileSystemHttpCacheProvider();
 
-        DefaultLocalFileSystemHttpCacheProvider()
+        protected DefaultLocalFileSystemHttpCacheProvider()
         {
-
         }
 
         public void Configure(string cahcheFolder, IPathResolver pathResolver)
@@ -53,7 +52,7 @@ namespace Utility.HttpCache
             }
         }
 
-        private string CalculateAbsolutePath(Uri contentUri)
+        protected string CalculateAbsolutePath(Uri contentUri)
         {
             var path = _pathResolver.Resolve(contentUri);
 

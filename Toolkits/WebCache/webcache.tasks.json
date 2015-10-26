@@ -1,6 +1,32 @@
 [
+    {
+    "name": "Office web cache task",
+    "encoding": "utf-8",
+    "pagination": {
+      "nav_uri_fmt": "https://social.technet.microsoft.com/Forums/office/en-US/home?category=officeitpro&filter=alltypes&sort=firstpostdesc&page={0}",
+      "start_page": 1,
+      "page_length": 100,
+      "look_up": {
+        "xpath": "//*[@id=\"threadList\"]/li/div/a",
+        "attribute": "href"
+      },
+      "basic_uri": "",
+      "uri_filter": "",
+      "uri_transform": {
+        "pattern": "(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})",
+        "target_format": "http://social.msdn.microsoft.com/Forums/en-US/{1}?outputAs=xml"
+      }
+    },
+    "cache": {
+      "uri_to_path_transform": {
+        "pattern": "(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})",
+        "target_format": "thread_id_{1}.xml"
+      },
+      "root_folder": "D:\\forum_cache\\office"
+    }
+  },
   {
-    "name": "example web cache task",
+    "name": "UWP web cache task",
     "encoding": "utf-8",
     "pagination": {
       "nav_uri_fmt": "https://social.msdn.microsoft.com/Forums/windowsapps/en-US/home?forum=wpdevelop&filter=alltypes&sort=firstpostdesc&brandIgnore=true&page={0}",

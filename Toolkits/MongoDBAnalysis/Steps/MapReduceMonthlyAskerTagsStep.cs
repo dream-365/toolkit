@@ -26,17 +26,17 @@ namespace MongoDBAnalysis
             }
         }
 
-        public MapReduceMonthlyAskerTagsStep(string database, string repository, string month)
+        public MapReduceMonthlyAskerTagsStep(string repository, string month)
         {
             _repository = repository;
 
             _month = month;
 
-            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + database);
+            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
 
-            _database = client.GetDatabase(database);
+            _database = client.GetDatabase(repository);
 
-            _userActivityCollection = _database.GetCollection<BsonDocument>(_repository + "_" + "asker_activities");
+            _userActivityCollection = _database.GetCollection<BsonDocument>("asker_activities");
         }
 
         public async Task RunAsync()
@@ -80,7 +80,7 @@ namespace MongoDBAnalysis
 
             var options = new MapReduceOptions<BsonDocument, BsonDocument>();
 
-            options.OutputOptions = MapReduceOutputOptions.Merge(_repository + "_user_tags");
+            options.OutputOptions = MapReduceOutputOptions.Merge("user_tags");
 
             options.Filter = "{month: '" + _month +"'}";
 

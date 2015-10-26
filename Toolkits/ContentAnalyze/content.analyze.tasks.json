@@ -1,14 +1,27 @@
 [
-  {
-    "name": "MSDN Thread Metadata",
-    "root_folder": "D:\\forum_cache\\uwp\\social.msdn.microsoft.com",
+    {
+    "name": "Office Metadata Generation",
+    "root_folder": "D:\\forum_cache\\office\\social.msdn.microsoft.com",
     "encoding": "utf-8",
     "file_name_pattern": "",
-    "output_to": "D:\\temp\\result.json",
+    "output_to": "D:\\temp\\office_metadata.json",
     "modules": [
       {
         "name": "msdn-xml-module",
         "arguments": []
+      }
+    ]
+  },
+  {
+    "name": "UWP Metadata Generation",
+    "root_folder": "D:\\forum_cache\\uwp\\social.msdn.microsoft.com",
+    "encoding": "utf-8",
+    "file_name_pattern": "",
+    "output_to": "D:\\temp\\uwp_metadata.json",
+    "modules": [
+      {
+        "name": "msdn-xml-module",
+        "arguments": [ ]
       }
     ]
   }

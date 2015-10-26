@@ -12,21 +12,41 @@ namespace ContentAnalyze
     {
         static void Main(string[] args)
         {
-            if(args.Length == 0)
+            var configText = File.ReadAllText("content.analyze.tasks.json");
+
+            var configrations =
+                JsonConvert.DeserializeObject<IEnumerable<ContentProcessTaskConfigration>>(configText);
+
+            int index = 0;
+
+            foreach (var configration in configrations)
             {
-                var configText = File.ReadAllText("content.analyze.tasks.json");
+                Console.WriteLine("[{0}]: {1}", index, configration.Name);
 
-                var configrations =
-                    JsonConvert.DeserializeObject<IEnumerable<ContentProcessTaskConfigration>>(configText);
+                index++;
+            }
 
-                var config = configrations.FirstOrDefault();
+            var input = Console.ReadLine();
 
-                ParseMetadata(config);
+            int number;
+
+            ContentProcessTaskConfigration selected = null;
+
+            if (int.TryParse(input, out number)
+                && number > -1
+                && number < configrations.Count())
+            {
+                selected = configrations.ElementAt(number);
             }
             else
             {
-                var option = args[0];
+                Console.WriteLine("Invalid Input");
+
+                return;
             }
+
+            ParseMetadata(selected);
+
         }
 
         private static void ParseMetadata(ContentProcessTaskConfigration config)

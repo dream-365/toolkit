@@ -155,6 +155,9 @@ app.config(['$routeProvider',
         }).when('/askers/:repository', {
             templateUrl: 'partials/askers.html',
             controller: 'askersController'
+        }).when('/explorer/:repository', {
+            templateUrl: 'partials/threadexplorer.html',
+            controller: 'threadexplorerController'
         });
   }]);
 

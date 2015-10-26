@@ -36,21 +36,21 @@ namespace MongoDBAnalysis
             }
         }
 
-        public AskerAnalysisStep(string database, string repository, string month)
+        public AskerAnalysisStep(string repository, string month)
         {
-            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + _database);
+            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
 
             _repository = repository;
 
             _month = month;
 
-            _database = client.GetDatabase(database);
+            _database = client.GetDatabase(repository);
 
             _userCollection = _database.GetCollection<BsonDocument>("users");
 
-            _threadCollection = _database.GetCollection<BsonDocument>(repository + "_" + month + "_" + "threads");
+            _threadCollection = _database.GetCollection<BsonDocument>(month + "_" + "threads");
 
-            _askerActivities = _database.GetCollection<BsonDocument>(repository + "_" + "asker_activities");
+            _askerActivities = _database.GetCollection<BsonDocument>("asker_activities");
         }
 
         public async Task RunAsync()

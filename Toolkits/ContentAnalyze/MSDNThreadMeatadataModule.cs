@@ -53,15 +53,28 @@ namespace ContentAnalyze
 
                 var xMessages = xDoc.Element("root").Element("messages").Descendants("message");
 
-                var messages = (from c in xMessages
-                                select new Dictionary<string, string>
+                var messages = new List<Dictionary<string, object>>();
+
+                foreach (var msg in xMessages)
+                {
+                    var histories = msg.Element("histories").Descendants("history").Select(m => new {
+                        type = m.Element("type").Value,
+                        date = m.Element("date").Value,
+                        user = m.Element("user").Value
+                    }).ToList();
+
+                    var item = new Dictionary<string, object>
                                 {
-                                    { "id", c.Attribute("id").Value },
-                                    { "authorId", c.Attribute("authorId").Value },
-                                    { "createdOn", c.Element("createdOn").Value },
-                                    { "body", c.Element("body").Value },
-                                    { "is_answer", c.Element("answer") == null ? "false" : c.Element("answer").Value}
-                                }).ToList();
+                                    { "id", msg.Attribute("id").Value },
+                                    { "authorId", msg.Attribute("authorId").Value },
+                                    { "createdOn", msg.Element("createdOn").Value },
+                                    { "body", msg.Element("body").Value },
+                                    { "is_answer", msg.Element("answer") == null ? "false" : msg.Element("answer").Value},
+                                    { "histories", histories }
+                                };
+
+                    messages.Add(item);
+                }
 
                 var xThread = xDoc.Element("root").Element("thread");
 

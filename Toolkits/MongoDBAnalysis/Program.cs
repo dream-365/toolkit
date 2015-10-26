@@ -18,23 +18,21 @@ namespace MongoDBAnalysis
         {
             if (args.Length < 2)
             {
-                Console.WriteLine("arguments: {database} {repository} {month}");
+                Console.WriteLine("arguments: {repository} {month}");
 
                 return;
             }
 
-            string database = args[0];
+            string repository = args[0];
 
-            string repository = args[1];
-
-            string month = args[2];
+            string month = args[1];
 
             IList<IStep> steps = new List<IStep>
             {
-                new ImportNewUsersStep(database, repository, month),
-                new AskerAnalysisStep(database, repository, month),
-                new MapReduceMonthlyAskerTagsStep(database, repository, month),
-                new UpdateMonthlyAskerTagsToAskerActivityStep(database, repository, month)
+                new ImportNewUsersStep(repository, month),
+                new AskerAnalysisStep(repository, month),
+                new MapReduceMonthlyAskerTagsStep(repository, month),
+                new UpdateMonthlyAskerTagsToAskerActivityStep(repository, month)
             };
 
             foreach(var step in steps)
@@ -42,24 +40,6 @@ namespace MongoDBAnalysis
                 Console.WriteLine(step.Description);
                 step.RunAsync().Wait();
             }
-        }
-
-        private static void ExportJsonData()
-        {
-            var text = File.ReadAllText(@"D:\temp\all_in_one.json");
-
-            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject(text) as JArray;
-
-            var export = obj.Where(m =>
-            {
-                var value = m.Value<DateTime>("createdOn");
-
-                return value >= DateTime.Parse("2015-8-1") && value < DateTime.Parse("2015-9-1");
-            });
-
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Formatting.Indented);
-
-            File.WriteAllText(@"D:\temp\uwp_aug_threads.json", json);
         }
 
         private static void RunAskerAnslysis()

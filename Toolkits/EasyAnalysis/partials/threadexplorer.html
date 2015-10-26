@@ -1,0 +1,60 @@
+﻿<div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{repository}} REPOSITORY</h3>
+        </div>
+        <div class="panel-body">
+            <!-- TOP 10 Tags -->
+            <div style="font-size:140%;float:left;">
+                <div ng-repeat="group in filter.tag.groups">
+                    <label>{{group.name}}:</label>
+                    <select ng-model="selection[group.name]" ng-change="selection_value_changed(group.name, selection)">
+                        <option ng-repeat="tag in group.tags" value="{{tag.value}}">{{tag.name}}</option>
+                    </select>
+                </div>
+                <div>
+                    <div>
+                        <label>Tags selected:</label>
+                        <span ng-repeat="tag in filter.tag.selected"
+                              class="label label-primary"
+                              style="margin-right:5px;cursor:pointer;"
+                              ng-click="remove_tag_from_filter(tag)"
+                              >{{tag}}</span>
+                    </div>
+                    <div>
+                        <label>Related top 10 tags:</label>
+                        <div>
+                            <div ng-repeat="tag in filter.tag.related" style="display:inline-block;">
+                                <span
+                                      class="label label-primary"
+                                      style="margin-right:5px;cursor:pointer;"
+                                      ng-click="add_tag_to_filter(tag.name)">{{tag.name}} x {{tag.freq}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+    </div>
+    <div>
+        <div>
+            <div ng-repeat="profile in threadProfiles">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{profile.title}}</div>
+                    <div class="panel-body">
+                        <div>
+                            <span>{{profile.category}} ^ {{profile.type}}</span>
+                        </div>
+                        <div>
+                            <div ng-repeat="tag in profile.tags" style="display:inline-block;">
+                                <span class="label label-primary"
+                                      style="margin-right:5px;cursor:pointer;"
+                                      ng-click="add_tag_to_filter(tag.name)">{{tag}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

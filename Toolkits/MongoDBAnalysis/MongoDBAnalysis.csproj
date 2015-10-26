@@ -75,6 +75,7 @@
     <Content Include="readme.txt" />
     <Content Include="Scripts\export_user_profiles.js" />
     <Content Include="Scripts\list_user_threads.js" />
+    <Content Include="Scripts\map_reduce_op_mark.js" />
     <Content Include="Scripts\map_reduce_user_tags.js" />
     <Content Include="Scripts\update_tags_to_user_profile.js" />
   </ItemGroup>
