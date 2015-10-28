@@ -15,7 +15,9 @@ namespace EasyAnalysis.Backend
     {
         static void Main(string[] args)
         {
-            new DuplicateDetection().Run();
+            var task = new DuplicateDetection().RunAsync();
+
+            task.Wait();
         }
     }
 }

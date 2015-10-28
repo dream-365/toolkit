@@ -227,6 +227,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
+    <Content Include="partials\dupdetection.html" />
     <Content Include="partials\threadexplorer.html" />
     <Content Include="partials\userprofiles.html" />
     <Content Include="partials\detail.html" />
@@ -244,6 +245,7 @@
     <None Include="Properties\PublishProfiles\easyanalysis - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\controllers\askersController.js" />
+    <Content Include="Scripts\controllers\dupdetectionController.js" />
     <Content Include="Scripts\controllers\threadexplorerController.js" />
     <Content Include="Scripts\controllers\userProfileController.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

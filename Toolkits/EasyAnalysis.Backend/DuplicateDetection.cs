@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using EasyAnalysis.Backend.Algorithm;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace EasyAnalysis.Backend
 {
     public class DuplicateDetection
     {
-        public void Run()
+        public async Task RunAsync()
         {
             // {{ parameters:
 
@@ -22,46 +24,69 @@ namespace EasyAnalysis.Backend
             DateTime end = DateTime.Parse("2015-10-1");
 
             // }}
-
             var distance = new LevenshteinDistance();
 
             string cs = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-            var result = new List<string>();
+            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
+
+            var database = client.GetDatabase(repository);
+
+            var dup_detection = database.GetCollection<BsonDocument>("dup_detection");
 
             using (var connection = new System.Data.SqlClient.SqlConnection(cs))
             {
-                var titles = connection.Query(SqlQueryFactory.Instance.Get("get_thread_profile"),
+                var threads = connection.Query(SqlQueryFactory.Instance.Get("get_thread_profile"),
                 new
                 {
                     repository = repository.ToUpper(),
                     start = start,
                     end = end
-                }).Select(m => m.Title as string).ToList();
+                })
+                .Select(m => new { Title = m.Title, Id = m.Id })
+                .ToList();
 
-               for (int i = 0; i < titles.Count - 1; i++)
+               for (int i = 0; i < threads.Count - 1; i++)
                {
-                    for(int j = i + 1; j < titles.Count; j++)
+                    for(int j = i + 1; j < threads.Count; j++)
                     {
-                        var left = titles[i].ToLower();
+                        var left = (threads[i].Title as string).ToLower();
 
-                        var right = titles[j].ToLower();
+                        var right = (threads[j].Title as string).ToLower();
 
                         var percentage = distance.LevenshteinDistancePercent(left, right) * 100;
 
                         // list all the percentage >= 50%
                         if(percentage >= 50m)
                         {
-                            result.Add(string.Format("Left: {0}\r\nRight: {1}\r\nPercertage: {2}%", left, right, percentage));
+                            var md5 = Utils.ComputeStringPairMD5Hash(left, right);
+
+                            var count = await dup_detection.Find("{_id: '" + md5 + "'}").CountAsync();
+
+                            if (count == 0)
+                            {
+                                var dict = new Dictionary<string, object>()
+                                {
+                                    { "_id", md5 },
+                                    { "left", new Dictionary<string, string> {
+                                        { "thread_id", threads[i].Id as string },
+                                        { "text", left as string}
+                                    }},
+                                    { "right", new Dictionary<string, string> {
+                                        { "thread_id", threads[j].Id as string},
+                                        { "text", right as string}
+                                    }},
+                                    { "percentage", (int)percentage }
+                                };
+
+                                var document = new BsonDocument(dict);
+
+                                await dup_detection.InsertOneAsync(document);
+                            }
                         }
                     }
 
                     Console.Write(".");
-                }
-
-                foreach(var item in result)
-                {
-                    Console.WriteLine(item);
                 }
             }
         }
