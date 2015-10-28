@@ -158,6 +158,9 @@ app.config(['$routeProvider',
         }).when('/explorer/:repository', {
             templateUrl: 'partials/threadexplorer.html',
             controller: 'threadexplorerController'
+        }).when('/dupdetection/:repository', {
+            templateUrl: 'partials/dupdetection.html',
+            controller: 'dupdetectionController'
         });
   }]);
 

@@ -47,3 +47,12 @@
     padding-top:10px;
     margin-bottom:20px;
 }
+
+
+.summary .hover-panel {
+    display:none;
+}
+
+.summary:hover .hover-panel {
+    display: block;
+}
