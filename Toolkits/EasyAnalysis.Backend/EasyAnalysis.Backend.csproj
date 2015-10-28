@@ -95,10 +95,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SQL\get_thread_tags.sql">
+    <Content Include="Query\get_thread_tags.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SQL\get_thread_profile.sql">
+    <Content Include="Query\get_thread_profile.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
