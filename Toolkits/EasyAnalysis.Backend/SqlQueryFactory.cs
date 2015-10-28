@@ -20,7 +20,7 @@ namespace EasyAnalysis.Backend
         {
             try
             {
-                var filePath = Path.Combine("SQL", name + ".sql");
+                var filePath = Path.Combine("Query", name + ".sql");
 
                 var text = File.ReadAllText(filePath);
 
