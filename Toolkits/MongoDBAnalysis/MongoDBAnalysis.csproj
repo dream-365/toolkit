@@ -73,9 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <Content Include="Scripts\asker_who_mark_behiviour_analysis.js" />
     <Content Include="Scripts\export_user_profiles.js" />
+    <Content Include="Scripts\group_by_tags.js" />
+    <Content Include="Scripts\group_user_behivour.js" />
     <Content Include="Scripts\list_user_threads.js" />
     <Content Include="Scripts\map_reduce_op_mark.js" />
+    <Content Include="Scripts\map_reduce_op_mark_behiviour.js" />
+    <Content Include="Scripts\map_reduce_user_activities.js" />
     <Content Include="Scripts\map_reduce_user_tags.js" />
     <Content Include="Scripts\update_tags_to_user_profile.js" />
   </ItemGroup>
