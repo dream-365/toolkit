@@ -41,7 +41,7 @@
                 tag: {
                     groups: [
                         {
-                            name: 'Platfrom', tags: [
+                            name: 'Platform', tags: [
                               { value: '', name: 'All'}, 
                               { value: 'uwp', name: 'uwp'}, 
                               { value: 'wp8.1', name:'wp8.1'}, 
