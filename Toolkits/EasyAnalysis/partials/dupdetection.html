@@ -6,6 +6,12 @@
         </ol>
     </div>
     <div>
+        <ul class="pager">
+            <li class="previous disabled"><a href="javascript:void(0)">← Prev</a></li>
+            <li class="next"><a href="javascript:void(0)">Next →</a></li>
+        </ul>
+    </div>
+    <div>
         <div ng-repeat="item in items">
             <div class="summary" style="cursor:pointer;">
                 <div class="form-horizontal">
@@ -24,7 +30,7 @@
                     <div class="form-group hover-panel">
                         <div class="col-lg-1"></div>
                         <div class="col-lg-10">
-                            <a href="javascript:void(0)" class="btn btn-primary">Dismiss</a>
+                            <a href="javascript:void(0)" class="btn btn-primary" ng-click="remove_item(item._id)">Dismiss</a>
                             <a href="javascript:void(0)" class="btn btn-success">Similar</a>
                             <a href="javascript:void(0)" class="btn btn-danger">Spam</a>
                         </div>
