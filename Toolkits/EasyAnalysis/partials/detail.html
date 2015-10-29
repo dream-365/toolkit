@@ -15,8 +15,8 @@
                     </div>
 
                     <div style="margin:10px 0 10px 0px;">
-                        <div style="font-size:140%;float:left;">
-                            <span ng-repeat="tag in item.Tags" class="label label-primary" ng-click="Tag_click()" style="margin-right:5px;cursor:pointer;">{{tag}}</span>
+                        <div style="float:left;">
+                            <span ng-repeat="tag in item.Tags" class="post-tag" ng-click="Tag_click()">{{tag}}</span>
                         </div>
                         <span class="glyphicon mdi-content-create"
                               style="cursor:pointer;"

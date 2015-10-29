@@ -24,6 +24,10 @@ controllers.controller('discoverController', ['$scope', '$location', 'threadServ
                 }
             }
 
+            $scope.goto = function (module) {
+                $location.url('/' + module + '/' + $scope.repository);
+            }
+
             $scope.navigateTo = function(id) {
                 $location.url('/detail/' + $scope.repository + '/' + id);
             }
