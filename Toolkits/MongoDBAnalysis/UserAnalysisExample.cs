@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDBAnalysis.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -13,7 +14,7 @@ namespace MongoDBAnalysis
     {
         public async Task<IDictionary<string, dynamic>> RunAskerAnalysis()
         {
-            var client = new MongoClient("mongodb://rpt:$DB$1passAz@app-svr.cloudapp.net:27017/forums");
+            var client = new MongoClient("mongodb://" + MongoDBHelper.GetMDBCS() + "/forums");
 
             var forums = client.GetDatabase("forums");
 
@@ -65,7 +66,7 @@ namespace MongoDBAnalysis
 
         public async Task<IDictionary<string, dynamic>> RunAnswerAnalysis(string userType)
         {
-            var client = new MongoClient("mongodb://rpt:$DB$1passAz@app-svr.cloudapp.net:27017/forums");
+            var client = new MongoClient("mongodb://" + MongoDBHelper.GetMDBCS() + "/forums");
 
             var forums = client.GetDatabase("forums");
 

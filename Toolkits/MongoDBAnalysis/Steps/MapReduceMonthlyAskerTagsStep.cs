@@ -26,13 +26,13 @@ namespace MongoDBAnalysis
             }
         }
 
-        public MapReduceMonthlyAskerTagsStep(string repository, string month)
+        public MapReduceMonthlyAskerTagsStep(string repository, string month, MongoDBAnalysis.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider)
         {
             _repository = repository;
 
             _month = month;
 
-            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
+            var client = new MongoClient(mongoDBDataProvider.GetConnectionString(repository));
 
             _database = client.GetDatabase(repository);
 

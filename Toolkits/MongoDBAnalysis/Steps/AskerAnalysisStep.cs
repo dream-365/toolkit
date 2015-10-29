@@ -36,9 +36,9 @@ namespace MongoDBAnalysis
             }
         }
 
-        public AskerAnalysisStep(string repository, string month)
+        public AskerAnalysisStep(string repository, string month, MongoDBAnalysis.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider)
         {
-            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
+            var client = new MongoClient(mongoDBDataProvider.GetConnectionString(repository));
 
             _repository = repository;
 
