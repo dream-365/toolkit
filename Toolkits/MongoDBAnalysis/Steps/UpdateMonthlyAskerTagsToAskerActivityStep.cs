@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MongoDBAnalysis
+namespace Framework
 {
     public class UpdateMonthlyAskerTagsToAskerActivityStep : IStep
     {
@@ -28,7 +28,7 @@ namespace MongoDBAnalysis
             }
         }
 
-        public UpdateMonthlyAskerTagsToAskerActivityStep(string repository, string month, MongoDBAnalysis.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider)
+        public UpdateMonthlyAskerTagsToAskerActivityStep(string repository, string month, EasyAnalysis.Framework.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider)
         {
             _repository = repository;
 

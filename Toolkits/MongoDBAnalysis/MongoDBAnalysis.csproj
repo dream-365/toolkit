@@ -59,9 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectionStringProviders\ConnectionStringProvider.cs" />
-    <Compile Include="ConnectionStringProviders\IConnectionStringProvider.cs" />
-    <Compile Include="ConnectionStringProviders\MongoDBConnectionStringProvider.cs" />
     <Compile Include="Steps\AskerAnalysisStep.cs" />
     <Compile Include="Steps\ImportNewUsersStep.cs" />
     <Compile Include="Steps\IStep.cs" />
@@ -86,6 +83,12 @@
     <Content Include="Scripts\map_reduce_user_activities.js" />
     <Content Include="Scripts\map_reduce_user_tags.js" />
     <Content Include="Scripts\update_tags_to_user_profile.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EasyAnalysis.Framework\EasyAnalysis.Framework.csproj">
+      <Project>{f0fca46c-ced4-4fbb-b8c2-7e82c9ef5810}</Project>
+      <Name>EasyAnalysis.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

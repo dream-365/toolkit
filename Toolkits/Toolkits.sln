@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Backend", "Eas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Api", "EasyAnalysis.Api\EasyAnalysis.Api.csproj", "{94B5FAA1-70DF-4374-BC8E-843FE545DF85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Framework", "EasyAnalysis.Framework\EasyAnalysis.Framework.csproj", "{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{94B5FAA1-70DF-4374-BC8E-843FE545DF85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94B5FAA1-70DF-4374-BC8E-843FE545DF85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94B5FAA1-70DF-4374-BC8E-843FE545DF85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MongoDBAnalysis.ConnectionStringProviders
+namespace EasyAnalysis.Framework.ConnectionStringProviders
 {
     public class MongoDBConnectionStringProvider : IConnectionStringProvider
     {

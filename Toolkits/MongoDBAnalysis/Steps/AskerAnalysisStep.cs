@@ -12,7 +12,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MongoDBAnalysis
+namespace Framework
 {
     public class AskerAnalysisStep : IStep
     {
@@ -36,7 +36,7 @@ namespace MongoDBAnalysis
             }
         }
 
-        public AskerAnalysisStep(string repository, string month, MongoDBAnalysis.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider)
+        public AskerAnalysisStep(string repository, string month, EasyAnalysis.Framework.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider)
         {
             var client = new MongoClient(mongoDBDataProvider.GetConnectionString(repository));
 

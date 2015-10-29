@@ -28,7 +28,10 @@ namespace EasyAnalysis.Backend
 
             var connection = new System.Data.SqlClient.SqlConnection(cs);
 
-            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
+            Framework.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider =
+                Framework.ConnectionStringProviders.ConnectionStringProvider.CreateConnectionStringProvider(Framework.ConnectionStringProviders.ConnectionStringProvider.ConnectionStringProviderType.MongoDBConnectionStringProvider);
+
+            var client = new MongoClient(mongoDBDataProvider.GetConnectionString(repository));
 
             var database = client.GetDatabase(repository);
 

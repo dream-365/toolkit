@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Framework
+namespace EasyAnalysis.Framework
 {
-    public interface IStep
+    class Class1
     {
-        string Description { get; }
-
-        Task RunAsync();
     }
 }

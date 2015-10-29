@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MongoDBAnalysis
+namespace Framework
 {
     public class ImportNewUsersStep : IStep
     {
@@ -20,7 +20,7 @@ namespace MongoDBAnalysis
 
         private readonly string _month;
 
-        public ImportNewUsersStep(string repository, string month, MongoDBAnalysis.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider)
+        public ImportNewUsersStep(string repository, string month, EasyAnalysis.Framework.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider)
         {
             _repository = repository;
 

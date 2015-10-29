@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MongoDBAnalysis
+namespace Framework
 {
     class Program
     {
@@ -26,15 +26,15 @@ namespace MongoDBAnalysis
 
             string month = args[1];
 
-            MongoDBAnalysis.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider = 
-                MongoDBAnalysis.ConnectionStringProviders.ConnectionStringProvider.CreateConnectionStringProvider(MongoDBAnalysis.ConnectionStringProviders.ConnectionStringProvider.ConnectionStringProviderType.MongoDBConnectionStringProvider);
+            EasyAnalysis.Framework.ConnectionStringProviders.IConnectionStringProvider mongoDBCSProvider =
+                EasyAnalysis.Framework.ConnectionStringProviders.ConnectionStringProvider.CreateConnectionStringProvider(EasyAnalysis.Framework.ConnectionStringProviders.ConnectionStringProvider.ConnectionStringProviderType.MongoDBConnectionStringProvider);
 
             IList<IStep> steps = new List<IStep>
             {
-                new ImportNewUsersStep(repository, month, mongoDBDataProvider),
-                new AskerAnalysisStep(repository, month, mongoDBDataProvider),
-                new MapReduceMonthlyAskerTagsStep(repository, month, mongoDBDataProvider),
-                new UpdateMonthlyAskerTagsToAskerActivityStep(repository, month, mongoDBDataProvider)
+                new ImportNewUsersStep(repository, month, mongoDBCSProvider),
+                new AskerAnalysisStep(repository, month, mongoDBCSProvider),
+                new MapReduceMonthlyAskerTagsStep(repository, month, mongoDBCSProvider),
+                new UpdateMonthlyAskerTagsToAskerActivityStep(repository, month, mongoDBCSProvider)
             };
 
             foreach(var step in steps)
