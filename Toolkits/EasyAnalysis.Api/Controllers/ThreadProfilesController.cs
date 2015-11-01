@@ -23,7 +23,9 @@ namespace EasyAnalysis.Api.Controllers
             [FromUri] DateTime? end,
             [FromUri] string tags)
         {
-            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
+            EasyAnalysis.Framework.ConnectionStringProviders.IConnectionStringProvider mongoDBCSProvider =
+                EasyAnalysis.Framework.ConnectionStringProviders.ConnectionStringProvider.CreateConnectionStringProvider(EasyAnalysis.Framework.ConnectionStringProviders.ConnectionStringProvider.ConnectionStringProviderType.MongoDBConnectionStringProvider);
+            var client = new MongoClient(mongoDBCSProvider.GetConnectionString(repository));//"mongodb://app-svr.cloudapp.net:27017/" + repository);
 
             var database = client.GetDatabase(repository);
 
@@ -107,7 +109,9 @@ namespace EasyAnalysis.Api.Controllers
             [FromUri] DateTime? end,
             [FromUri] string tags)
         {
-            var client = new MongoClient("mongodb://app-svr.cloudapp.net:27017/" + repository);
+            EasyAnalysis.Framework.ConnectionStringProviders.IConnectionStringProvider mongoDBCSProvider =
+                   EasyAnalysis.Framework.ConnectionStringProviders.ConnectionStringProvider.CreateConnectionStringProvider(EasyAnalysis.Framework.ConnectionStringProviders.ConnectionStringProvider.ConnectionStringProviderType.MongoDBConnectionStringProvider);
+            var client = new MongoClient(mongoDBCSProvider.GetConnectionString(repository));//"mongodb://app-svr.cloudapp.net:27017/" + repository);
 
             var database = client.GetDatabase(repository);
 

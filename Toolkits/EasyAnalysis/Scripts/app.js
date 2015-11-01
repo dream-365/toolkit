@@ -216,3 +216,55 @@ app.factory('threadService', ['$http', function ($http) {
         }
     }
 }]);
+
+app.factory('userProfileService', ['$http', function ($http) {
+    return {
+        query: function (uri) {
+            // TODO: CODE_REFACTOR
+            var req = {
+                method: 'POST',
+                url: '/api/UserProfile',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: '=' + uri
+            }
+
+            return $http(req);
+        },
+        details: function (repository, display_name) {
+            return $http.get('api/UserProfile/' + repository + '/todo');
+        },
+        //get: function (id) {
+        //    return $http.get('api/UserProfile/' + id);
+        //},
+        //classify: function (threadId, typeId) {
+        //    return $http.post('api/thread/' + threadId + '/classify/' + typeId);
+        //},
+        //types: function (id) {
+        //    return $http.get('api/thread/' + id + '/types');
+        //},
+        //todo: function (repository) {
+        //    return $http.get('api/thread/' + repository + '/todo');
+        //},
+        //detail: function (id) {
+        //    return $http.get('api/thread/' + id + '/detail');
+        //},
+        //addTag: function (id, tag) {
+        //    // TODO: CODE_REFACTOR
+        //    var req = {
+        //        method: 'POST',
+        //        url: 'api/thread/' + id + '/tag/',
+        //        headers: {
+        //            'Content-Type': 'application/x-www-form-urlencoded'
+        //        },
+        //        data: '=' + encodeURIComponent(tag)
+        //    }
+
+        //    return $http(req);
+        //},
+        //getTags: function (id) {
+        //    return $http.get('api/thread/' + id + '/tags');
+        //}
+    }
+}]);
