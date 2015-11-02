@@ -29,10 +29,6 @@ namespace Utility.HttpCache
                     createTableCmd.CommandText = "";
                 }
             }
-
-            
-
-
         }
 
     }

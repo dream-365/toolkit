@@ -2,8 +2,8 @@
 // [dev]: localhost:58116
 
 var web_api_config = {
-    // host: 'app-svr.cloudapp.net'
-    host: 'localhost:58116'
+    host: 'eas-api.azurewebsites.net'
+    // host: 'localhost:58116'
 }
 
 app.factory('userProfileService', ['$http', function ($http) {

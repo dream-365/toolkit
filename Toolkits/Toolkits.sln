@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Api", "EasyAna
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Framework", "EasyAnalysis.Framework\EasyAnalysis.Framework.csproj", "{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Infrastructure.Cache", "EasyAnalysis.Infrastructure._Cache_\EasyAnalysis.Infrastructure.Cache.csproj", "{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0FCA46C-CED4-4FBB-B8C2-7E82C9EF5810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
