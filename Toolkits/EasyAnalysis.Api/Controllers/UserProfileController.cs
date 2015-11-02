@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -37,7 +38,7 @@ namespace EasyAnalysis.Api.Controllers
 
             if (!string.IsNullOrEmpty(display_name))
             {
-                filter = filter & builder.Eq("display_name", display_name);
+                filter = filter & builder.Regex("display_name", BsonRegularExpression.Create(new Regex("^" + display_name, RegexOptions.IgnoreCase)));
             }
 
             if (!string.IsNullOrEmpty(month))
