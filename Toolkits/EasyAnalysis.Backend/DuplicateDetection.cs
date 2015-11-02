@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using EasyAnalysis.Backend.Algorithm;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using EasyAnalysis.Framework.ConnectionStringProviders;
 
 namespace EasyAnalysis.Backend
 {
@@ -28,8 +28,8 @@ namespace EasyAnalysis.Backend
 
             string cs = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-            Framework.ConnectionStringProviders.IConnectionStringProvider mongoDBDataProvider =
-                Framework.ConnectionStringProviders.ConnectionStringProvider.CreateConnectionStringProvider(Framework.ConnectionStringProviders.ConnectionStringProvider.ConnectionStringProviderType.MongoDBConnectionStringProvider);
+            IConnectionStringProvider mongoDBDataProvider =
+                ConnectionStringProvider.CreateConnectionStringProvider(ConnectionStringProvider.ConnectionStringProviderType.MongoDBConnectionStringProvider);
 
             var client = new MongoClient(mongoDBDataProvider.GetConnectionString(repository));
 

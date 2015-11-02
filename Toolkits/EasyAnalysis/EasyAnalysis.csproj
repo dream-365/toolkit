@@ -258,7 +258,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\services\easDataService.js" />
+    <Content Include="Scripts\services\easDataServices.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
