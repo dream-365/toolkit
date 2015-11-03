@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <Content Include="Scripts\aggregate_user_profiles.js" />
     <Content Include="Scripts\asker_who_mark_behiviour_analysis.js" />
     <Content Include="Scripts\export_user_profiles.js" />
     <Content Include="Scripts\group_by_tags.js" />
