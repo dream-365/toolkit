@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ImportNewUsers.cs" />
     <Compile Include="Algorithm\LevenshteinDistance.cs" />
     <Compile Include="BuildThreadProfiles.cs" />
     <Compile Include="DuplicateDetection.cs" />
