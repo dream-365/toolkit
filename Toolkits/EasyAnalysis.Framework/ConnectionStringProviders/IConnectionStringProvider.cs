@@ -13,7 +13,7 @@ namespace EasyAnalysis.Framework.ConnectionStringProviders
         /// </summary>
         /// <param name="dBName">DB Name</param>
         /// <returns></returns>
-        string GetConnectionString(string dBName);
+        string GetConnectionString(string dBName = null);
 
         /// <summary>
         /// Execute Dispose
