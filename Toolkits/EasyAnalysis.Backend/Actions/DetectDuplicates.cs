@@ -1,45 +1,63 @@
-﻿using System;
+﻿using EasyAnalysis.Backend.Algorithm;
+using EasyAnalysis.Framework.Analysis;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using EasyAnalysis.Backend.Algorithm;
+using EasyAnalysis.Framework.ConnectionStringProviders;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using EasyAnalysis.Framework.ConnectionStringProviders;
 
-namespace EasyAnalysis.Backend
+namespace EasyAnalysis.Backend.Actions
 {
-    public class DuplicateDetection
+    public class DetectDuplicates : IAction
     {
-        public async Task RunAsync()
+        private const string QUERY_GET_THREAD_PROFILE = "get_thread_profile";
+
+        private IConnectionStringProvider _mssqlconnectionStringProvider;
+        private IConnectionStringProvider _mongoconnectionStringProvider;
+
+        public string Description
+        {
+            get
+            {
+                return "detect the duplicates among threads and export to mongodb";
+            }
+        }
+
+        public DetectDuplicates(IConnectionStringProvider mssqlconnectionStringProvider, IConnectionStringProvider mongoconnectionStringProvider)
+        {
+            _mssqlconnectionStringProvider = mssqlconnectionStringProvider;
+            _mongoconnectionStringProvider = mongoconnectionStringProvider;
+        }
+
+
+        public async Task RunAsync(string[] args)
         {
             // {{ parameters:
 
-            string repository = "uwp";
+            string repository = args[0];
 
-            DateTime start = DateTime.Parse("2015-9-1");
+            DateTime start = DateTime.Parse(args[1]);
 
-            DateTime end = DateTime.Parse("2015-10-1");
+            DateTime end = DateTime.Parse(args[2]);
+
+            string targetCollection = args[3];
 
             // }}
+
             var distance = new LevenshteinDistance();
 
-            string cs = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
-            IConnectionStringProvider mongoDBDataProvider =
-                ConnectionStringProvider.CreateConnectionStringProvider(ConnectionStringProvider.ConnectionStringProviderType.MongoDBConnectionStringProvider);
-
-            var client = new MongoClient(mongoDBDataProvider.GetConnectionString(repository));
+            var client = new MongoClient(_mongoconnectionStringProvider.GetConnectionString(repository));
 
             var database = client.GetDatabase(repository);
 
-            var dup_detection = database.GetCollection<BsonDocument>("dup_detection");
+            var dup_detection = database.GetCollection<BsonDocument>(targetCollection);
 
-            using (var connection = new System.Data.SqlClient.SqlConnection(cs))
+            using (var connection = new System.Data.SqlClient.SqlConnection(_mssqlconnectionStringProvider.GetConnectionString()))
             {
-                var threads = connection.Query(SqlQueryFactory.Instance.Get("get_thread_profile"),
+                var threads = connection.Query(SqlQueryFactory.Instance.Get(QUERY_GET_THREAD_PROFILE),
                 new
                 {
                     repository = repository.ToUpper(),
@@ -49,9 +67,9 @@ namespace EasyAnalysis.Backend
                 .Select(m => new { Title = m.Title, Id = m.Id })
                 .ToList();
 
-               for (int i = 0; i < threads.Count - 1; i++)
-               {
-                    for(int j = i + 1; j < threads.Count; j++)
+                for (int i = 0; i < threads.Count - 1; i++)
+                {
+                    for (int j = i + 1; j < threads.Count; j++)
                     {
                         var left = (threads[i].Title as string).ToLower();
 
@@ -60,7 +78,7 @@ namespace EasyAnalysis.Backend
                         var percentage = distance.LevenshteinDistancePercent(left, right) * 100;
 
                         // list all the percentage >= 50%
-                        if(percentage >= 50m)
+                        if (percentage >= 50m)
                         {
                             var md5 = Utils.ComputeStringPairMD5Hash(left, right);
 
@@ -88,8 +106,6 @@ namespace EasyAnalysis.Backend
                             }
                         }
                     }
-
-                    Console.Write(".");
                 }
             }
         }

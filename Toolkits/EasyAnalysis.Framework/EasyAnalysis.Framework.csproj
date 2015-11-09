@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis\IAction.cs" />
+    <Compile Include="Analysis\IActionFactory.cs" />
     <Compile Include="ConnectionStringProviders\ConnectionStringProvider.cs" />
     <Compile Include="ConnectionStringProviders\IConnectionStringProvider.cs" />
     <Compile Include="ConnectionStringProviders\MongoDBConnectionStringProvider.cs" />
