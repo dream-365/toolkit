@@ -24,10 +24,9 @@ app.factory('userProfileService', ['$http', function ($http) {
         newsearch: function (resp, name, months) {
             var uri = 'http://' + web_api_config.host
                 + '/api/UserProfile?repository=' + encodeURIComponent(resp)
-                + '&display_name=' + encodeURIComponent(name)
-                + '&';
+                + '&display_name=' + encodeURIComponent(name);
             for (var i = 0; i < months.length; i++) {
-                uri += 'month[' + i + ']=' + months[i];
+                uri += '&month[' + i + ']=' + months[i];
             }
 
             return $http.get(uri);
@@ -36,10 +35,9 @@ app.factory('userProfileService', ['$http', function ($http) {
         newlist: function (resp, length, months) {
             var uri = 'http://' + web_api_config.host
                 + '/api/UserProfile?repository=' + encodeURIComponent(resp)
-                + '&length=' + encodeURIComponent(length)
-                + '&';
+                + '&length=' + encodeURIComponent(length);
             for (var i = 0; i < months.length; i++) {
-                uri += 'month[' + i + ']=' + months[i];
+                uri += '&month[' + i + ']=' + months[i];
             }
 
             return $http.get(uri);
