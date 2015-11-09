@@ -2,18 +2,69 @@
 using EasyAnalysis.Framework.ConnectionStringProviders;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace EasyAnalysis.Backend.Actions
 {
-    public class ExtractAskerActivies : IAction
+    public class ExtractUserActivies : IAction
     {
-        private IConnectionStringProvider _connectionStringProvider;
+        private IConnectionStringProvider _mssqlconnectionStringProvider;
 
-        public ExtractAskerActivies(IConnectionStringProvider connectionStringProvider)
+        private IConnectionStringProvider _mongoconnectionStringProvider;
+
+        private class EmitScope : IDisposable
         {
-            _connectionStringProvider = connectionStringProvider;
+            private SqlConnection _sqlConnection;
+
+            public EmitScope(SqlConnection sqlConnection)
+            {
+                _sqlConnection = sqlConnection;
+            }
+
+            public void Emit(string userId, string action, DateTime time, string effectOn)
+            {
+                var signature = string.Format("{0}-{1}-{2:MM/dd/yy H:mm:ss}-{3}", userId, action.ToLower(), time, effectOn);
+
+                var md5Hash = Utils.ComputeStringMD5Hash(signature);
+
+                var match = _sqlConnection.Query(SqlQueryFactory.Instance.Get("find_user_activity_by_hash"), new { Hash = md5Hash });
+
+                if(match.Count() == 0)
+                {
+                    _sqlConnection.Execute(
+                        SqlQueryFactory.Instance.Get("insert_user_activity"),
+                        new
+                        {
+                            Hash = md5Hash,
+                            UserId = userId,
+                            Action = action,
+                            Time = time,
+                            EffectOn = effectOn
+                        });
+                }
+
+                PrintProgress();
+            }
+
+            public void Dispose()
+            {
+                _sqlConnection.Dispose();
+            }
+
+            private void PrintProgress()
+            {
+                Console.Write(".");
+            }
+        }
+
+        public ExtractUserActivies(IConnectionStringProvider mongoconnectionStringProvider, IConnectionStringProvider mssqlconnectionStringProvider)
+        {
+            _mssqlconnectionStringProvider = mssqlconnectionStringProvider;
+            _mongoconnectionStringProvider = mongoconnectionStringProvider;
         }
 
         public string Description
@@ -35,39 +86,66 @@ namespace EasyAnalysis.Backend.Actions
 
             var threadCollectionName = args[1];
 
-            var targetCollectionName = args[2];
+            var client = new MongoClient(_mongoconnectionStringProvider.GetConnectionString(repository));
 
-            var monthPrefix = args[3];
-
-            var client = new MongoClient(_connectionStringProvider.GetConnectionString(repository));
-           
             var database = client.GetDatabase(repository);
 
             var threadCollection = database.GetCollection<BsonDocument>(threadCollectionName);
 
-            var targetCollection = database.GetCollection<BsonDocument>(targetCollectionName);
+            var list = await threadCollection.Find("{}").ToListAsync();
 
-            await MapBasicInfo(threadCollection, targetCollection, monthPrefix);
-
+            using (var scope = new EmitScope(new SqlConnection(_mssqlconnectionStringProvider.GetConnectionString("EasIndexConnection"))))
+            {
+                list.ForEach(item =>
+                {
+                    ExtractInThread(item, scope);
+                });
+            }
         }
 
-
-        private async Task MapBasicInfo(IMongoCollection<BsonDocument> threadCollection, IMongoCollection<BsonDocument> targetCollection, string monthPrefix)
+        private static void ExtractInThread(BsonDocument item, EmitScope scope)
         {
-            await threadCollection
-                .Aggregate()
-                .Group("{ _id : '$authorId', total: { $sum: 1 } }")
-                .Sort("{total: -1}")
-                .ForEachAsync((item) =>
-                {
-                    var userId = item.GetElement("_id").Value.AsString;
+            var threadId = item.GetValue("id").AsString;
 
-                    var total = item.GetElement("total").Value.AsInt32;
+            var authorId = item.GetValue("authorId").AsString;
 
-                    var filter = Builders<BsonDocument>.Filter;
+            var createdOn = item.GetValue("createdOn").AsString;
 
-                    var updateAction = Builders<BsonDocument>.Update.Set("total", total);
-                });
+            scope.Emit(authorId, "Ask", DateTime.Parse(createdOn), threadId);
+
+            var messages = item.GetElement("messages").Value.AsBsonArray;
+
+            foreach (BsonDocument message in messages)
+            {
+                ExtractInMessage(scope, threadId, message);
+            }
+        }
+
+        private static void ExtractInMessage(EmitScope scope, string threadId, BsonDocument message)
+        {
+            var replyAuthorId = message.GetElement("authorId").Value.AsString;
+
+            var replyOn = message.GetElement("createdOn").Value.AsString;
+
+            scope.Emit(replyAuthorId, "Reply", DateTime.Parse(replyOn), threadId);
+
+            BsonArray histories = message.GetElement("histories").Value.AsBsonArray;
+
+            foreach (BsonDocument hisotry in histories)
+            {
+                ExtractInHistory(scope, threadId, hisotry);
+            }
+        }
+
+        private static void ExtractInHistory(EmitScope insert, string threadId, BsonDocument hisotry)
+        {
+            var user = hisotry.GetValue("user").AsString;
+
+            var date = hisotry.GetValue("date").AsString;
+
+            var type = hisotry.GetValue("type").AsString;
+
+            insert.Emit(user, type, DateTime.Parse(date), threadId);
         }
     }
 }

@@ -14,9 +14,21 @@ namespace EasyAnalysis.Framework.ConnectionStringProviders
             // nothing to disponse
         }
 
-        public string GetConnectionString(string database = null)
+        public string GetConnectionString(string name = null)
         {
-            return ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            if(string.IsNullOrEmpty(name))
+            {
+                return ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            }
+
+            var node = ConfigurationManager.ConnectionStrings[name];
+
+            if (node == null)
+            {
+                throw new Exception(string.Format("the connection name {0} is not found", name));
+            }
+
+            return node.ConnectionString;
         }
     }
 }

@@ -62,7 +62,6 @@ cursor.forEach(function(data) {
        },
        { upsert: true }
     );
-
 });
 
 

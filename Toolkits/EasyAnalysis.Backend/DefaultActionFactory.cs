@@ -14,8 +14,10 @@ namespace EasyAnalysis.Backend
                     return new Actions.BuildThreadProfiles
                         (new SqlServerConnectionStringProvider(),
                          new MongoDBConnectionStringProvider() );
-                case "extract-asker-activies":
-                    return new Actions.ExtractAskerActivies(new MongoDBConnectionStringProvider());
+                case "extract-user-activies":
+                    return new Actions.ExtractUserActivies(
+                        new MongoDBConnectionStringProvider(),
+                        new SqlServerConnectionStringProvider());
                 case "import-new-users":
                     return new Actions.ImportNewUsers(new MongoDBConnectionStringProvider());
 
