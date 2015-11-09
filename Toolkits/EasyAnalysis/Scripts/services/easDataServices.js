@@ -2,7 +2,7 @@
 // [dev]: localhost:58116
 
 var web_api_config = {
-    host: 'app-svr.cloudapp.net'
+    host: 'eas-api.azurewebsites.net'
     // host: 'localhost:58116'
 }
 

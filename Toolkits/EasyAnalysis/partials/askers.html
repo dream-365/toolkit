@@ -19,9 +19,9 @@
                                 </div>
                                 <div class="row-content">
                                     <h4 class="list-group-item-heading">{{profile.display_name}}</h4>
-                                    <p class="list-group-item-text">Platform: <span ng-repeat="tag in profile.platform_tags" class="post-tag">{{tag.name}}</span></p>
-                                    <p class="list-group-item-text">Language: <span ng-repeat="tag in profile.language_tags" class="post-tag">{{tag.name}}</span></p>
-                                    <p class="list-group-item-text">Month: <b style="color:red">{{profile.month}}</b> - Asked <b>{{profile.asked}}</b> questions, <b style="color:green">{{profile.answered}}</b> of them are answered</p>
+                                    <p class="list-group-item-text">Platform: <span ng-repeat="tag in profile.platform_tags">{{tag.name}}</span></p>
+                                    <p class="list-group-item-text">Language: <span ng-repeat="tag in profile.language_tags">{{tag.name}}</span></p>
+                                    <p class="list-group-item-text"><b style="color:red">{{profile.month}}</b> - Asked <b>{{profile.asked}}</b> questions, <b style="color:green">{{profile.answered}}</b> of them are answered</p>
                                     <div>
                                         <span ng-repeat="tag in profile.other_tags"
                                               class="post-tag">{{tag.name}}*{{tag.count}}</span>
