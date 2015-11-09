@@ -12,9 +12,7 @@ namespace EasyAnalysis.Backend.Actions
 {
     public class ExtractUserActivies : IAction
     {
-        private IConnectionStringProvider _mssqlconnectionStringProvider;
-
-        private IConnectionStringProvider _mongoconnectionStringProvider;
+        private IConnectionStringProvider _connectionStringProvider;
 
         private class EmitScope : IDisposable
         {
@@ -61,10 +59,9 @@ namespace EasyAnalysis.Backend.Actions
             }
         }
 
-        public ExtractUserActivies(IConnectionStringProvider mongoconnectionStringProvider, IConnectionStringProvider mssqlconnectionStringProvider)
+        public ExtractUserActivies(IConnectionStringProvider connectionStringProvider)
         {
-            _mssqlconnectionStringProvider = mssqlconnectionStringProvider;
-            _mongoconnectionStringProvider = mongoconnectionStringProvider;
+            _connectionStringProvider = connectionStringProvider;
         }
 
         public string Description
@@ -86,7 +83,7 @@ namespace EasyAnalysis.Backend.Actions
 
             var threadCollectionName = args[1];
 
-            var client = new MongoClient(_mongoconnectionStringProvider.GetConnectionString(repository));
+            var client = new MongoClient(_connectionStringProvider.GetConnectionString(string.Format("mongo:{0}", repository)));
 
             var database = client.GetDatabase(repository);
 
@@ -94,7 +91,7 @@ namespace EasyAnalysis.Backend.Actions
 
             var list = await threadCollection.Find("{}").ToListAsync();
 
-            using (var scope = new EmitScope(new SqlConnection(_mssqlconnectionStringProvider.GetConnectionString("EasIndexConnection"))))
+            using (var scope = new EmitScope(new SqlConnection(_connectionStringProvider.GetConnectionString("EasIndexConnection"))))
             {
                 list.ForEach(item =>
                 {
