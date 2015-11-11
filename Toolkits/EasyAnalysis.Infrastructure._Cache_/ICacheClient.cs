@@ -12,5 +12,7 @@ namespace EasyAnalysis.Infrastructure.Cache
         Stream GetCache(Uri resource);
 
         void SetCache(Uri resource, Stream stream);
+
+        bool IsCached(Uri resource);
     }
 }

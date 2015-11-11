@@ -43,6 +43,29 @@ namespace EasyAnalysis.Infrastructure.Cache
             _rootFolder = rootFolder;
         }
 
+        public bool IsCached(Uri uri)
+        {
+            var hash = Utils.ComputeStringMD5Hash(uri.AbsoluteUri, Encoding.UTF8);
+
+            var selectByHashSql = SqlLibrary.Instance.Require("SELECT_INDEX_BY_HASH");
+
+            using (var connection = new SQLiteConnection(string.Format("Data Source={0};Version=3;", _sqliteFilePath)))
+            {
+                var cacheIndex = connection
+                                    .Query<CacheIndex>(selectByHashSql, new { @Hash = hash })
+                                    .FirstOrDefault();
+
+                if(cacheIndex == null)
+                {
+                    return false;
+                }
+
+                var cacheFilePath = GetCacheFilePhysicalPath(cacheIndex.Path);
+
+                return File.Exists(cacheFilePath);
+            }
+        }
+
         public Stream GetCache(Uri uri)
         {
             // compute hash
@@ -63,9 +86,14 @@ namespace EasyAnalysis.Infrastructure.Cache
                         return null;
                     }
 
-                    var mem = new MemoryStream();
+                    var cacheFilePath = GetCacheFilePhysicalPath(cacheIndex.Path);
 
-                    var cacheFilePath = Path.Combine(_rootFolder, cacheIndex.Path);
+                    if(!File.Exists(cacheFilePath))
+                    {
+                        return null;
+                    }
+
+                    var mem = new MemoryStream();
 
                     using (var fs = new FileStream(cacheFilePath, FileMode.Open))
                     {
@@ -85,7 +113,7 @@ namespace EasyAnalysis.Infrastructure.Cache
             }
         }
 
-        public void CacheOrUpdate(Uri uri, Stream stream)
+        public void CacheOrUpdate(Uri uri, Stream content)
         {
             using (var connection = new SQLiteConnection(string.Format("Data Source={0};Version=3;", _sqliteFilePath)))
             {
@@ -101,11 +129,11 @@ namespace EasyAnalysis.Infrastructure.Cache
 
                     if(cacheIndex != null)
                     {
-                        var cacheFilePath = Path.Combine(_rootFolder, cacheIndex.Path);
+                        var existingCacheFilePath = GetCacheFilePhysicalPath(cacheIndex.Path);
 
-                        if(File.Exists(cacheFilePath))
+                        if(File.Exists(existingCacheFilePath))
                         {
-                            File.Delete(cacheFilePath);
+                            File.Delete(existingCacheFilePath);
                         }
 
                         // delete history by hash
@@ -114,19 +142,30 @@ namespace EasyAnalysis.Infrastructure.Cache
                         connection.Execute(deleteByHashSql, new { Hash = hash });
                     }
 
+                    var newCacheFilePath = GetCacheFilePhysicalPath(hash + ".cache");
+
+                    if(File.Exists(newCacheFilePath))
+                    {
+                        File.Delete(newCacheFilePath);
+                    }
+
+                    using (var fs = new FileStream(newCacheFilePath, FileMode.CreateNew))
+                    {
+                        content.CopyTo(fs);
+
+                        fs.Flush();
+                    }
+
                     var insertIntoCacheSql = SqlLibrary.Instance.Require("INSERT_INTO_CACHE_INDEX");
 
                     connection.Execute(insertIntoCacheSql, new CacheIndex
                     {
                         Url = uri.AbsoluteUri,
-                        Path = "local_file_path",
+                        Path = hash + ".cache",
                         CreatedOn = DateTime.Now,
                         ExpiredOn = DateTime.Now.AddHours(24),
                         Hash = hash
                     });
-
-
-
                 }
                 catch(Exception ex)
                 {
@@ -135,6 +174,11 @@ namespace EasyAnalysis.Infrastructure.Cache
                     throw ex;
                 }
             }
+        }
+
+        private string GetCacheFilePhysicalPath(string path)
+        {
+            return Path.Combine(_rootFolder, "_cache_", path);
         }
 
         private void Initialize()
@@ -156,6 +200,13 @@ namespace EasyAnalysis.Infrastructure.Cache
 
                     connection.Execute(createTableSql);
                 }
+            }
+
+            var cacheFolder = Path.Combine(_rootFolder, "_cache_");
+
+            if(!Directory.Exists(cacheFolder))
+            {
+                Directory.CreateDirectory(cacheFolder);
             }
 
             // set up SQLite local cache index

@@ -16,6 +16,11 @@ namespace EasyAnalysis.Infrastructure.Cache
             _service = service;
         }
 
+        public bool IsCached(Uri resource)
+        {
+            throw new NotImplementedException();
+        }
+
         Stream ICacheClient.GetCache(Uri resource)
         {
             return _service.GetCache(resource);

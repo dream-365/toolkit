@@ -33,9 +33,27 @@ namespace EasyAnalysis.Infrastructure.Cache.UnitTests
 
             var client = service.CreateClient();
 
-            client.SetCache(new Uri("http://www.localhost.com"), null);
+            using (var content = new MemoryStream())
+            using (var sw = new StreamWriter(content))
+            {
+                sw.WriteLine("hello world!");
 
-            var cache = client.GetCache(new Uri("http://www.localhost.com"));
+                sw.Flush();
+
+                content.Position = 0;
+
+                client.SetCache(new Uri("http://www.localhost.com"), content);
+
+                var cache = client.GetCache(new Uri("http://www.localhost.com"));
+
+                Assert.IsNotNull(cache);
+
+                var sr = new StreamReader(cache);
+
+                var contentInCache = sr.ReadLine();
+
+                Assert.AreEqual("hello world!", contentInCache);
+            }
         }
     }
 }
