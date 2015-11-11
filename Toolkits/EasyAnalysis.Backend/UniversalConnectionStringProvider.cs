@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EasyAnalysis.Backend
 {
-    public class DefaultConnectionStringProvider : IConnectionStringProvider
+    public class UniversalConnectionStringProvider : IConnectionStringProvider
     {
         private const string DEFAULT_CONNECTION_NAME = "DefaultConnection";
 

@@ -9,14 +9,21 @@ namespace EasyAnalysis.Infrastructure.Cache
 {
     public class LocalFileCacheClient : ICacheClient
     {
+        private readonly LocalFileCacheServcie _service;
+
+        internal LocalFileCacheClient(LocalFileCacheServcie service)
+        {
+            _service = service;
+        }
+
         Stream ICacheClient.GetCache(Uri resource)
         {
-            throw new NotImplementedException();
+            return _service.GetCache(resource);
         }
 
         void ICacheClient.SetCache(Uri resource, Stream stream)
         {
-            throw new NotImplementedException();
+            _service.CacheOrUpdate(resource, stream);
         }
     }
 }

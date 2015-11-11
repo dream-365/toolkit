@@ -82,7 +82,7 @@
     <Compile Include="Actions\ExtractAskerActivies.cs" />
     <Compile Include="Actions\ImportNewUsers.cs" />
     <Compile Include="Algorithm\LevenshteinDistance.cs" />
-    <Compile Include="DefaultConnectionStringProvider.cs" />
+    <Compile Include="UniversalConnectionStringProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlQueryFactory.cs" />

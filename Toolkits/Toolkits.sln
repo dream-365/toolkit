@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Framework", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Infrastructure.Cache", "EasyAnalysis.Infrastructure._Cache_\EasyAnalysis.Infrastructure.Cache.csproj", "{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{81C9692C-B01E-461C-8674-C135AE8F7A3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAnalysis.Infrastructure.Cache.UnitTests", "EasyAnalysis.Infrastructure.Cache.UnitTests\EasyAnalysis.Infrastructure.Cache.UnitTests.csproj", "{2347877E-F596-4AAF-8BA2-9630A39142E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,8 +85,15 @@ Global
 		{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B57EF93A-9BE9-4EC1-8912-58496B8CE7BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2347877E-F596-4AAF-8BA2-9630A39142E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2347877E-F596-4AAF-8BA2-9630A39142E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2347877E-F596-4AAF-8BA2-9630A39142E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2347877E-F596-4AAF-8BA2-9630A39142E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2347877E-F596-4AAF-8BA2-9630A39142E6} = {81C9692C-B01E-461C-8674-C135AE8F7A3E}
 	EndGlobalSection
 EndGlobal
