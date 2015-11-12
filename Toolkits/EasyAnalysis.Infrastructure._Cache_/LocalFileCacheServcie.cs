@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Data.SQLite;
 using System.Diagnostics;
+using EasyAnalysis.Framework.Cache;
 
 namespace EasyAnalysis.Infrastructure.Cache
 {

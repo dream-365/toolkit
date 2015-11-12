@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasyAnalysis.Infrastructure.Cache
+namespace EasyAnalysis.Framework.Cache
 {
     public interface ICacheService
     {

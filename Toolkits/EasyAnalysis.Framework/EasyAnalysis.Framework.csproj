@@ -44,10 +44,14 @@
   <ItemGroup>
     <Compile Include="Analysis\IAction.cs" />
     <Compile Include="Analysis\IActionFactory.cs" />
+    <Compile Include="Cache\ICacheClient.cs" />
+    <Compile Include="Cache\ICacheService.cs" />
     <Compile Include="ConnectionStringProviders\ConnectionStringProvider.cs" />
     <Compile Include="ConnectionStringProviders\IConnectionStringProvider.cs" />
     <Compile Include="ConnectionStringProviders\MongoDBConnectionStringProvider.cs" />
     <Compile Include="ConnectionStringProviders\SqlServerConnectionStringProvider.cs" />
+    <Compile Include="GeneralDataFlow.cs" />
+    <Compile Include="IURIDiscovery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

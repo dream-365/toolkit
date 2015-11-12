@@ -67,8 +67,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICacheClient.cs" />
-    <Compile Include="ICacheService.cs" />
     <Compile Include="LocalFileCacheClient.cs" />
     <Compile Include="LocalFileCacheServcie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +88,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SQL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EasyAnalysis.Framework\EasyAnalysis.Framework.csproj">
+      <Project>{f0fca46c-ced4-4fbb-b8c2-7e82c9ef5810}</Project>
+      <Name>EasyAnalysis.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.98.1\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.98.1\build\net45\System.Data.SQLite.Core.targets')" />
