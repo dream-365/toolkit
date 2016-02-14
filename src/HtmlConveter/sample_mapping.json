@@ -1,0 +1,9 @@
+﻿[
+{
+  "xPath": "//head/title",
+  "sourceValueType": 1,
+  "sourceAttributeName": "",
+  "targetPropertyName": "title",
+  "isArray": false
+}
+]

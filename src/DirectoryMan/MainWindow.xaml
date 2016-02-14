@@ -1,0 +1,98 @@
+﻿<Window x:Class="DirectoryMan.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="600" Width="800">
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml"></ResourceDictionary>
+    </Window.Resources>
+    <Grid x:Name="stage">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="195" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup Name="OperationStates">
+                <VisualState Name="oinit">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OperationsGrid" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames.KeyFrames>
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" >
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Collapsed</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames.KeyFrames>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="previewButton" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames.KeyFrames>
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" >
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames.KeyFrames>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState Name="preview">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OperationsGrid" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames.KeyFrames>
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" >
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames.KeyFrames>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="previewButton" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames.KeyFrames>
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" >
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Collapsed</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames.KeyFrames>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <StackPanel Grid.Row="0" DataContext="{Binding UserInteraction}">
+            <TextBox Tag="顶层目录" Style="{StaticResource placeHolder}" Text="{Binding Path=RootDirectory, Mode=TwoWay}"  />
+            <TextBox Tag="正则表达式" Style="{StaticResource placeHolder}" Text="{Binding Path=Regex, Mode=TwoWay}"  />
+            <TextBox Tag="目标格式" Style="{StaticResource placeHolder}" Text="{Binding Path=TargetExpression, Mode=TwoWay}" />
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Margin="5" FontSize="15" IsChecked="{Binding Path=SelectFile, Mode=TwoWay}">文件</CheckBox>
+                <CheckBox Margin="5" FontSize="15" IsChecked="{Binding Path=SelectFolder, Mode=TwoWay}">文件夹</CheckBox>
+            </StackPanel>
+            <Button x:Name="previewButton" Margin="5" Click="Button_Click" FontSize="30">预览</Button>
+            <Grid x:Name="OperationsGrid" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="ExecuteButton" Click="ExecuteButton_Click" FontSize="30">确定</Button>
+                <Button Grid.Column="1" x:Name="CancelButton" FontSize="30" Click="CancelButton_Click">取消</Button>
+            </Grid>
+        </StackPanel>
+        <DataGrid
+            Grid.Row="1"
+            Margin="10"
+            FontSize="15"
+            ItemsSource="{Binding PreviewItems}"
+            AutoGenerateColumns="False"
+            x:Name="PreviewDataGrid" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="名称" Width="4*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="操作" Width="1*" Binding="{Binding Action}" />
+                <DataGridTextColumn Header="预览" Width="4*" Binding="{Binding Result}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

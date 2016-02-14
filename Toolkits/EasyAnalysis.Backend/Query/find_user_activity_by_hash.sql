@@ -1,1 +1,0 @@
-﻿SELECT [Hash] FROM [dbo].[UserActivities] WHERE [Hash] = @Hash
