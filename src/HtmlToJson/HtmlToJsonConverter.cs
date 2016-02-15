@@ -16,7 +16,7 @@ namespace HtmlToJson
             _mappings = mappings;
         }
 
-        public string Convert(string html)
+        public string Convert(string html, bool format = true)
         {
             var dict = new Dictionary<string, object>();
 
@@ -39,7 +39,7 @@ namespace HtmlToJson
                 }  
             }
 
-            return JsonConvert.SerializeObject(value:dict, formatting:Formatting.Indented);
+            return JsonConvert.SerializeObject(value:dict, formatting: format ? Formatting.Indented : Formatting.None);
         }
     }
 }
