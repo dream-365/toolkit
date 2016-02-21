@@ -1,0 +1,21 @@
+﻿[
+  {
+    "sourcePropertyName": "title",
+    "targetPropertyName": "title",
+    "transform": "replace('xxxx', '')"
+  },
+  {
+    "sourcePropertyName": "id",
+    "targetPropertyName": "tid",
+    "transform": "regex('tid=(\\d+)', '{1}')"
+  },
+  {
+    "sourcePropertyName": "id",
+    "targetPropertyName": "fid",
+    "transform": "regex('fid=(\\d+)', '{1}')"
+  },
+  {
+    "sourcePropertyName": "content",
+    "targetPropertyName": "content"
+  }
+]
