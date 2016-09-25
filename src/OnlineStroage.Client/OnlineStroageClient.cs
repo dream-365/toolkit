@@ -36,7 +36,24 @@ namespace OnlineStroage.Client
 
         public async Task<Stream> DownloadStrem(string path)
         {
-            throw new NotImplementedException();
+            var client = new HttpClient();
+
+            var stream = await client.GetStreamAsync(_endpoint + "/blob/" + path);
+
+            var mem = new MemoryStream();
+
+            stream.CopyTo(mem);
+
+            return mem;
+        }
+
+        public async Task<bool> DeleteAsync(string path)
+        {
+            var client = new HttpClient();
+
+            var msg = await client.DeleteAsync(_endpoint + "/blob/" + path);
+
+            return msg.StatusCode == System.Net.HttpStatusCode.OK;
         }
     }
 }

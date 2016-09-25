@@ -21,6 +21,8 @@ namespace OnlineStroage
             );
 
             config.Routes.MapHttpRoute("BlobApi", "blob/{*pathInfo}", new { controller = "Blob", id = RouteParameter.Optional });
+
+            config.Routes.MapHttpRoute("ImageApi", "image/{*pathInfo}", new { controller = "Image", id = RouteParameter.Optional });
         }
     }
 }

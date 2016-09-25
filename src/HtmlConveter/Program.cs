@@ -25,7 +25,7 @@ namespace HtmlConveter
         {
             if(args.Length == 0)
             {
-                Console.WriteLine("-mapping maping.json -encoding utf8 -html source.html -json target.json");
+                Console.WriteLine("-mapping maping.json -encoding utf8 -html source.html -json target.json [-date (after,before)]");
 
                 return;
             }
@@ -54,6 +54,8 @@ namespace HtmlConveter
                 parameters.ContainsKey("encoding") 
                 ? parameters["encoding"] 
                 : "utf8");
+
+            bool hasDate = parameters.ContainsKey("date");
 
             var mappingFileText = File.ReadAllText(mappingFilePath);
 
@@ -87,7 +89,20 @@ namespace HtmlConveter
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
 
-                    foreach (var file in dir.EnumerateFiles())
+                    var enumer = dir.EnumerateFiles();
+
+                    if (hasDate)
+                    {
+                        var dates = parameters["date"].Trim('(', ')').Split(',');
+
+                        var after = DateTime.Parse(dates[0]);
+
+                        var before = DateTime.Parse(dates[1]);
+
+                        enumer = enumer.Where(f => f.CreationTime >= after & f.CreationTime < before);
+                    }
+
+                    foreach (var file in enumer)
                     {
                         var task = factory.StartNew((
                             ) => {

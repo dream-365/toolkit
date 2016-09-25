@@ -154,3 +154,6 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+*.pubxml
+/src/packages
+/src/.vs/config

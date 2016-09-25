@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace OnlineStroage
 {
@@ -46,6 +47,27 @@ namespace OnlineStroage
             stream.Position = 0;
 
             return stream;
+        }
+
+        public bool Delete(string path)
+        {
+            var fullPath = Path.Combine(_root, path);
+
+            if(!File.Exists(fullPath))
+            {
+                return true;
+            }
+
+            try
+            {
+                File.Delete(fullPath);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

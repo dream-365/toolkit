@@ -42,5 +42,17 @@ namespace OnlineStroage.Controllers
 
             return string.Empty;
         }
+
+        public HttpResponseMessage Delete(string pathInfo)
+        {
+            if(LocalBlob.Inst.Delete(pathInfo))
+            {
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }
