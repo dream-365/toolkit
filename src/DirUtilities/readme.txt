@@ -1,0 +1,1 @@
+dirx.exe "I:\\" "DISK-005" "E:\Data\disk\disk-005.json"

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToJson", "HtmlToJson\HtmlToJson.csproj", "{0EE37A51-06AE-4BEC-AD88-E14D6B1F1E59}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{F9E83617-0108-491D-8AB9-A16456E91880}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStroage.Client", "OnlineStroage.Client\OnlineStroage.Client.csproj", "{E0E7FBAB-56BC-4F9F-8CCD-32F6E5069936}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirUtilities", "DirUtilities\DirUtilities.csproj", "{8B32DA04-C541-413D-914E-348D8417D147}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{E0E7FBAB-56BC-4F9F-8CCD-32F6E5069936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0E7FBAB-56BC-4F9F-8CCD-32F6E5069936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0E7FBAB-56BC-4F9F-8CCD-32F6E5069936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B32DA04-C541-413D-914E-348D8417D147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B32DA04-C541-413D-914E-348D8417D147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B32DA04-C541-413D-914E-348D8417D147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B32DA04-C541-413D-914E-348D8417D147}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +89,6 @@ Global
 		{8141AFAE-6A57-4AC4-A3F7-F251F19B2B30} = {A12E1AB7-683E-42CD-B2B0-68D1492173AE}
 		{30107121-150D-4561-826D-6916BAF1EE95} = {F9E83617-0108-491D-8AB9-A16456E91880}
 		{E0E7FBAB-56BC-4F9F-8CCD-32F6E5069936} = {E2E7E150-02BD-4626-B1CF-992DB77054D4}
+		{8B32DA04-C541-413D-914E-348D8417D147} = {A12E1AB7-683E-42CD-B2B0-68D1492173AE}
 	EndGlobalSection
 EndGlobal
